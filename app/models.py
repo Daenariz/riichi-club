@@ -9,6 +9,16 @@ from app import login
 from hashlib import md5
 
 
+class Event(db.Model):
+    id: so.Mapped[int] = so.mapped_column(primary_key=True)
+    title: so.Mapped[str] = so.mapped_column(sa.String(100))
+    location: so.Mapped[str] = so.mapped_column(sa.String(100)) # Raum an der TU
+    event_time: so.Mapped[datetime] = so.mapped_column(default=lambda: datetime.now(timezone.utc))
+    description: so.Mapped[Optional[str]] = so.mapped_column(sa.String(256))
+
+    def __repr__(self):
+        return f'<Event {self.title}>'
+
 class User(UserMixin, db.Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
     username: so.Mapped[str] = so.mapped_column(sa.String(64), index=True, unique=True)
