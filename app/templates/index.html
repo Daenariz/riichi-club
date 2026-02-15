@@ -24,13 +24,51 @@
     <h2>Meet Us</h2>
     <p>We meet regularly to play and discuss strategies. Reach out to us or create an account to stay updated!</p>
 </div>
-<div class="events-section">
-        <h2>Upcoming Events</h2>
-        {% for post in posts %}
-            <div class="event-card" style="border-left: 4px solid #d4af37; padding: 10px; margin: 10px 0;">
-                <strong>{{ post.timestamp.strftime('%d.%m.%Y @ %H:%M') }}</strong>
-                <p>{{ post.body }}</p>
+<div class="events-container" style="max-width: 800px; margin: 40px auto; font-family: 'Arial', sans-serif;">
+    <h2 style="border-bottom: 2px solid #d4af37; padding-bottom: 15px; color: #333; letter-spacing: 1px;">UPCOMING EVENTS</h2>
+    
+    {% for post in posts %}
+    <details style="background: #fff; border: 1px solid #eee; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: transform 0.2s;">
+        <summary style="padding: 20px; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center;">
+            <div style="display: flex; flex-direction: column;">
+<h3 style="margin: 0; color: #d4af37; font-size: 1.5rem;">
+    {% if post.event_type == 'workshop' %}
+        Einsteigerworkshop
+    {% elif post.event_type == 'suzume' %}
+        Suzume-Jong Schnupperabend
+    {% else %}
+        {{ post.event_type if post.event_type else 'Club Event' }}
+    {% endif %}
+</h3><span style="color: #666; font-size: 0.95rem; margin-top: 5px;">
+                    📅 {{ post.timestamp.strftime('%A, %d. %B %Y') }}
+                </span>
             </div>
-        {% endfor %}
-    </div>
-    {% endblock %}
+
+            <div style="text-align: right; border-left: 1px solid #ddd; padding-left: 20px;">
+                <span style="display: block; font-weight: bold; font-size: 1.1rem; color: #333;">
+                    {{ post.timestamp.strftime('%H:%M') }} Uhr
+                </span>
+   <div style="font-size: 0.85rem; color: #555;">
+    {% if post.location_type == 'online' %}
+        🌐 Discord (Online)
+    {% else %}
+        📍 TH Köln (Lokal)
+    {% endif %}
+<!-- </div> -->
+            </div>
+        </summary>
+        
+        <div style="padding: 0 20px 20px 20px; border-top: 1px solid #f5f5f5; line-height: 1.7; color: #444;">
+            <div style="white-space: pre-line; margin-top: 15px; font-size: 1rem;">
+                {{ post.body }}
+            </div>
+            
+            <div style="margin-top: 25px; background: #fff9e6; padding: 15px; border-radius: 4px; text-align: center; border: 1px solid #ffecb3;">
+                <strong style="color: #333;">Interesse?</strong><br>
+                <a href="mailto:mahjong@eato.negitorodon.de" style="color: #d4af37; text-decoration: none; font-weight: bold;">Anmeldung per E-Mail an mahjong@eato.negitorodon.de</a>
+            </div>
+        </div>
+    </details>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -42,13 +42,12 @@ class User(UserMixin, db.Model):
 
 class Post(db.Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
-    body: so.Mapped[str] = so.mapped_column(sa.String(140))
+    body: so.Mapped[str] = so.mapped_column(sa.String(2000)) # Viel Platz für Texte
     timestamp: so.Mapped[datetime] = so.mapped_column(index=True, default=lambda: datetime.now(timezone.utc))
     user_id: so.Mapped[int] = so.mapped_column(sa.ForeignKey(User.id), index=True)
+    event_type: so.Mapped[Optional[str]] = so.mapped_column(sa.String(100))
+    location_type: so.Mapped[Optional[str]] = so.mapped_column(sa.String(20))
     author: so.Mapped[User] = so.relationship(back_populates='posts')
-
-    def __repr__(self):
-        return '<Post {}>'.format(self.body)
 
 @login.user_loader
 def load_user(id):

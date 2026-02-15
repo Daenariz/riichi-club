@@ -1,16 +1,19 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField
+from wtforms import SelectField, StringField, PasswordField, BooleanField, SubmitField, TextAreaField, DateField, TimeField
 from wtforms.validators import DataRequired, Length
 
-from wtforms import StringField, TextAreaField, SubmitField, DateField, TimeField
-from wtforms.validators import DataRequired, Length
 
 class EventForm(FlaskForm):
-    title = StringField('Event Title', validators=[DataRequired(), Length(max=100)])
+    # title = StringField('Event Title', validators=[DataRequired()])
+    event_type = SelectField('Event Type', choices=[
+        ('workshop', 'Einsteigerworkshop'),
+        ('suzume', 'Suzume Jong - Mahjong Schnupperabend')
+    ])
+    location_type = SelectField('Location', choices=[('online', 'Online'), ('lokal', 'Lokal')])
     date = DateField('Date', format='%Y-%m-%d', validators=[DataRequired()])
     time = TimeField('Time', validators=[DataRequired()])
-    description = TextAreaField('Description', validators=[Length(max=500)])
-    submit = SubmitField('Post Event')
+    description = TextAreaField('Description', validators=[Length(max=2000)])
+    submit = SubmitField('Event erstellen')
 
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])

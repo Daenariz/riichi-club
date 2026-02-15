@@ -61,17 +61,17 @@ def user(username):
 def create_event():
     form = EventForm()
     if form.validate_on_submit():
-        # Kombiniere Datum und Zeit
         combined_dt = datetime.combine(form.date.data, form.time.data)
-        
-        # Erstelle ein Event (Post)
-        # Wir nutzen den Titel und die Beschreibung im Body, oder passen dein Model an
-        event_content = f"{form.title.data}: {form.description.data}"
-        post = Post(body=event_content, author=current_user, timestamp=combined_dt)
-        
+        post = Post(
+            body=form.description.data, 
+            author=current_user, 
+            timestamp=combined_dt,
+            event_type=form.event_type.data,
+            location_type=form.location_type.data  # Diese Zeile hinzufügen!
+
+        )
         db.session.add(post)
         db.session.commit()
-        flash('Event successfully created!')
         return redirect(url_for('home.index'))
     return render_template('create_event.html', title='Create Event', form=form)
 
@@ -79,27 +79,22 @@ def create_event():
 @login_required
 def edit_event(id):
     post = db.session.get(Post, id)
-    if post.author != current_user:
-        flash('You cannot edit this event.')
-        return redirect(url_for('home.index'))
-    
+
     form = EventForm()
     if form.validate_on_submit():
-        # Kombiniere Datum und Zeit aus dem Formular
-        combined_dt = datetime.combine(form.date.data, form.time.data)
-        
-        post.body = f"{form.title.data}: {form.description.data}"
-        post.timestamp = combined_dt
-        
+        post.event_type = form.event_type.data
+        post.location_type = form.location_type.data
+        post.body = form.description.data
+        post.timestamp = datetime.combine(form.date.data, form.time.data)
         db.session.commit()
-        flash('Your event has been updated.')
         return redirect(url_for('home.user', username=current_user.username))
     
     elif request.method == 'GET':
+        # WICHTIG: Hier werden die alten Daten ins Formular geladen
+        form.event_type.data = post.event_type  # Setzt das Dropdown auf den gespeicherten Wert
         form.description.data = post.body
         form.date.data = post.timestamp.date()
         form.time.data = post.timestamp.time()
-        form.title.data = "Event Title" 
         
     return render_template('create_event.html', title='Edit Event', form=form)
 
