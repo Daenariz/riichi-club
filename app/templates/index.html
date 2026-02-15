@@ -28,18 +28,19 @@
     <h2 style="border-bottom: 2px solid #d4af37; padding-bottom: 15px; color: #333; letter-spacing: 1px;">UPCOMING EVENTS</h2>
     
     {% for post in posts %}
-    <details style="background: #fff; border: 1px solid #eee; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: transform 0.2s;">
-        <summary style="padding: 20px; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center;">
-            <div style="display: flex; flex-direction: column;">
-<h3 style="margin: 0; color: #d4af37; font-size: 1.5rem;">
-    {% if post.event_type == 'workshop' %}
-        Einsteigerworkshop
-    {% elif post.event_type == 'suzume' %}
-        Suzume-Jong Schnupperabend
-    {% else %}
-        {{ post.event_type if post.event_type else 'Club Event' }}
-    {% endif %}
-</h3><span style="color: #666; font-size: 0.95rem; margin-top: 5px;">
+    <details id="event-{{ post.id }}" style="scroll-margin-top: 100px; ...">
+    <summary style="..." onclick="setTimeout(() => { document.getElementById('event-{{ post.id }}').scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 100);">            
+      <div style="display: flex; flex-direction: column;">
+      <h3 style="margin: 0; color: #d4af37; font-size: 1.5rem;">
+        {% if post.event_type == 'workshop' %}
+          Einsteigerworkshop
+        {% elif post.event_type == 'suzume' %}
+          Suzume-Jong Schnupperabend
+        {% else %}
+          {{ post.event_type if post.event_type else 'Club Event' }}
+      {% endif %}
+</h3>
+<span style="color: #666; font-size: 0.95rem; margin-top: 5px;">
                     📅 {{ post.timestamp.strftime('%A, %d. %B %Y') }}
                 </span>
             </div>
