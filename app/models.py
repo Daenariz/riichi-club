@@ -25,6 +25,7 @@ class User(UserMixin, db.Model):
     email: so.Mapped[str] = so.mapped_column(sa.String(120), index=True, unique=True)
     password_hash: so.Mapped[Optional[str]] = so.mapped_column(sa.String(256))
     posts: so.WriteOnlyMapped['Post'] = so.relationship(back_populates='author')
+    blog_posts: so.WriteOnlyMapped['BlogPost'] = so.relationship(back_populates='author')
     about_me: so.Mapped[Optional[str]] = so.mapped_column(sa.String(140))
     last_seen: so.Mapped[Optional[datetime]] = so.mapped_column(default=lambda: datetime.now(timezone.utc))
 
@@ -48,6 +49,15 @@ class Post(db.Model):
     event_type: so.Mapped[Optional[str]] = so.mapped_column(sa.String(100))
     location_type: so.Mapped[Optional[str]] = so.mapped_column(sa.String(20))
     author: so.Mapped[User] = so.relationship(back_populates='posts')
+
+class BlogPost(db.Model):
+    id: so.Mapped[int] = so.mapped_column(primary_key=True)
+    title: so.Mapped[str] = so.mapped_column(sa.String(140))
+    body: so.Mapped[str] = so.mapped_column(sa.String(2000))
+    timestamp: so.Mapped[datetime] = so.mapped_column(index=True, default=lambda: datetime.now(timezone.utc))
+    user_id: so.Mapped[int] = so.mapped_column(sa.ForeignKey('user.id'), index=True)
+    
+    author: so.Mapped['User'] = so.relationship(back_populates='blog_posts')
 
 @login.user_loader
 def load_user(id):
