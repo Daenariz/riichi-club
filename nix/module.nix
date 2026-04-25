@@ -38,6 +38,12 @@ in
 
     package = mkPackageOption pkgs "riichi-club" { };
 
+    stateDir = mkOption {
+      type = types.path;
+      default = "/var/lib/riichi_club";
+      description = "The directory to store the application's data.";
+    };
+
     port = mkOption {
       type = types.port;
       default = 5000;
@@ -84,6 +90,10 @@ in
   config = mkIf cfg.enable {
     nixpkgs.overlays = [ inputs.riichi-club.overlays.default ];
 
+    systemd.tmpfiles.rules = [
+      "d ${cfg.stateDir} 0750 ${cfg.user} ${cfg.group} - -"
+    ];
+
     networking.firewall.allowedTCPPorts = [
       80 # ACME challenge
       443
@@ -95,6 +105,7 @@ in
       wantedBy = [ "multi-user.target" ];
       environment = {
         PYTHONPATH = "${python-with-packages}/${python-with-packages.sitePackages}";
+        DATABASE_URI = "sqlite:///${cfg.stateDir}/app.db";
       };
       serviceConfig = {
         ExecStart = ''
