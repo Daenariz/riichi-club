@@ -20,9 +20,5 @@ def make_shell_context():
 #     # --- ENDE DEBUGGING ---
     return {'sa': sa, 'so': so, 'db': db, 'User': User, 'Post': Post}
 
-# from flask_hello import create_app
-
-# app = create_app()
-
 if __name__ == '__main__':
     app.run(debug=True)

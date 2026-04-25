@@ -3,11 +3,14 @@ requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "flask_hello"
+name = "riichi-club"
 version = "0.1.0"
 dependencies = [
     "flask",
+    "flask-wtf",
+    "flask-sqlalchemy",
+    "flask-migrate",
 ]
 
 [tool.setuptools.packages.find]
-include = ["flask_hello*"]
+include = ["app*"]
