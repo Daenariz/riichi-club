@@ -38,6 +38,11 @@ in
 
     package = mkPackageOption pkgs "riichi-club" { };
 
+    secretKey = mkOption {
+      type = types.str;
+      description = "Secret key for the application.";
+    };
+
     stateDir = mkOption {
       type = types.path;
       default = "/var/lib/riichi_club";
@@ -106,6 +111,7 @@ in
         PYTHONPATH = "${python-with-packages}/${python-with-packages.sitePackages}";
         DATABASE_URI = "sqlite:///${cfg.stateDir}/app.db";
         FLASK_APP = "run.py";
+        SECRET_KEY = cfg.secretKey;
       };
       serviceConfig = {
         Type = "oneshot";
@@ -124,6 +130,7 @@ in
       environment = {
         PYTHONPATH = "${python-with-packages}/${python-with-packages.sitePackages}";
         DATABASE_URI = "sqlite:///${cfg.stateDir}/app.db";
+        SECRET_KEY = cfg.secretKey;
       };
       serviceConfig = {
         ExecStart = ''
