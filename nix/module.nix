@@ -99,9 +99,27 @@ in
       443
     ];
 
+    systemd.services.riichi_club-db-migrate = {
+      description = "Riichi Club Database Migration";
+      before = [ "riichi_club.service" ];
+      environment = {
+        PYTHONPATH = "${python-with-packages}/${python-with-packages.sitePackages}";
+        DATABASE_URI = "sqlite:///${cfg.stateDir}/app.db";
+        FLASK_APP = "run.py";
+      };
+      serviceConfig = {
+        Type = "oneshot";
+        ExecStart = "${getExe python-with-packages} -m flask db upgrade";
+        WorkingDirectory = "${cfg.package}";
+        User = cfg.user;
+        Group = cfg.group;
+      };
+    };
+
     systemd.services.riichi_club = {
       description = "Riichi Club";
-      after = [ "network.target" ];
+      after = [ "network.target" "riichi_club-db-migrate.service" ];
+      requires = [ "riichi_club-db-migrate.service" ];
       wantedBy = [ "multi-user.target" ];
       environment = {
         PYTHONPATH = "${python-with-packages}/${python-with-packages.sitePackages}";
