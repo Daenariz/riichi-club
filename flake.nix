@@ -1,5 +1,5 @@
 {
-  description = "A hello world template for Python Flask";
+  description = "A web application for a Riichi Mahjong club.";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -35,7 +35,7 @@
     in
     {
       overlays.default = final: _prev: {
-        flask_hello = self.packages.${final.system}.default;
+        riichi-club = self.packages.${final.system}.default;
       };
 
       packages = forAllSystems (system: {
@@ -47,7 +47,7 @@
       });
 
       nixosModules = {
-        flask_hello = import ./nix/module.nix;
+        riichi-club = import ./nix/module.nix;
       };
 
       formatter = forAllSystems (

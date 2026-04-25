@@ -7,7 +7,7 @@
 }:
 
 let
-  cfg = config.services.flask_hello;
+  cfg = config.services.riichi_club;
   domain = config.networking.domain;
   fqdn = if (cfg.nginx.subdomain != "") then "${cfg.nginx.subdomain}.${domain}" else domain;
 
@@ -29,10 +29,10 @@ let
     ;
 in
 {
-  options.services.flask_hello = {
-    enable = mkEnableOption "Flask Hello World service.";
+  options.services.riichi_club = {
+    enable = mkEnableOption "Riichi Club service.";
 
-    package = mkPackageOption pkgs "flask_hello" { };
+    package = mkPackageOption pkgs "riichi-club" { };
 
     port = mkOption {
       type = types.port;
@@ -60,7 +60,7 @@ in
       };
       subdomain = mkOption {
         type = types.str;
-        default = "flask_hello";
+        default = "riichi-club";
         description = "Subdomain for the Nginx virtual host. Leave empty for root domain.";
       };
       ssl = mkOption {
@@ -78,15 +78,15 @@ in
   };
 
   config = mkIf cfg.enable {
-    nixpkgs.overlays = [ inputs.flask_hello.overlays.default ];
+    nixpkgs.overlays = [ inputs.riichi-club.overlays.default ];
 
     networking.firewall.allowedTCPPorts = [
       80 # ACME challenge
       443
     ];
 
-    systemd.services.flask_hello = {
-      description = "Flask Hello World";
+    systemd.services.riichi_club = {
+      description = "Riichi Club";
       after = [ "network.target" ];
       wantedBy = [ "multi-user.target" ];
       environment = {
