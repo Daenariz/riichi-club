@@ -15,6 +15,7 @@ python3.pkgs.buildPythonApplication rec {
     flask-wtf
     flask-sqlalchemy
     flask-migrate
+    flask-login
   ];
 
   src = ../.;

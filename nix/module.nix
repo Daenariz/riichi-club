@@ -14,6 +14,10 @@ let
   python-with-packages = pkgs.python3.withPackages (
     p: with p; [
       flask
+      flask-wtf
+      flask-sqlalchemy
+      flask-migrate
+      flask-login
     ]
   );
 
