@@ -124,7 +124,10 @@ in
 
     systemd.services.riichi_club = {
       description = "Riichi Club";
-      after = [ "network.target" "riichi_club-db-migrate.service" ];
+      after = [
+        "network.target"
+        "riichi_club-db-migrate.service"
+      ];
       requires = [ "riichi_club-db-migrate.service" ];
       wantedBy = [ "multi-user.target" ];
       environment = {
