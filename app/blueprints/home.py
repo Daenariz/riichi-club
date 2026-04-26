@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, flash, redirect, url_for, request, current_app
+from flask import Blueprint, render_template, flash, redirect, url_for, request, current_app, abort
 from app.forms import LoginForm, EditProfileForm, EventForm, BlogForm
 from flask_login import login_user, current_user, logout_user, login_required
 import sqlalchemy as sa
@@ -131,8 +131,21 @@ def delete_event(id):
 
 @home_bp.route("/blog")
 def blog():
-    posts = BlogPost.query.order_by(BlogPost.timestamp.desc()).all()
-    return render_template("blog.html", posts=posts)
+    page = request.args.get("page", 1, type=int)
+    query = sa.select(BlogPost).order_by(BlogPost.timestamp.desc())
+    pagination = db.paginate(
+        query, page=page, per_page=current_app.config["POSTS_PER_PAGE"], error_out=False
+    )
+    posts = pagination.items
+    return render_template("blog.html", title="Blog", posts=posts, pagination=pagination)
+
+
+@home_bp.route('/blog/<int:id>')
+def view_blog(id):
+    post = db.session.get(BlogPost, id)
+    if post is None:
+        abort(404)
+    return render_template('view_blog.html', post=post, title=post.title)
 
 
 @home_bp.route("/create_blog", methods=["GET", "POST"])

@@ -4,8 +4,8 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 class Config:
-    SECRET_KEY = os.environ.get("SECRET_KEY")
+    SECRET_KEY = os.environ.get("SECRET_KEY") or "a-secret-key-for-development"
     SQLALCHEMY_DATABASE_URI = os.environ.get(
         "DATABASE_URI"
     ) or "sqlite:///" + os.path.join(basedir, "app.db")
-    POSTS_PER_PAGE = 5
+    POSTS_PER_PAGE = 3
