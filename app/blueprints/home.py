@@ -9,6 +9,7 @@ from datetime import datetime, timezone
 
 home_bp = Blueprint("home", __name__)
 
+
 @home_bp.before_request
 def before_request():
     if current_user.is_authenticated:
@@ -16,69 +17,77 @@ def before_request():
         db.session.commit()
 
 
-@home_bp.route('/')
-@home_bp.route('/index')
+@home_bp.route("/")
+@home_bp.route("/index")
 # @login_required
 def index():
     query = sa.select(Post).order_by(Post.timestamp.desc())
     posts = db.session.scalars(query).all()
-    news = db.session.scalars(sa.select(BlogPost).order_by(BlogPost.timestamp.desc())).all()
+    news = db.session.scalars(
+        sa.select(BlogPost).order_by(BlogPost.timestamp.desc())
+    ).all()
 
-    return render_template('index.html', title='Home Page', posts=posts, news=news)
+    return render_template("index.html", title="Home Page", posts=posts, news=news)
 
 
-@home_bp.route('/login', methods=['GET', 'POST'])
+@home_bp.route("/login", methods=["GET", "POST"])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('home.index'))
+        return redirect(url_for("home.index"))
     form = LoginForm()
     if form.validate_on_submit():
-        user = db.session.scalar(sa.select(User).where(User.username == form.username.data))
+        user = db.session.scalar(
+            sa.select(User).where(User.username == form.username.data)
+        )
         if user is None or not user.check_password(form.password.data):
-            flash('Invalid username or password')
-            return redirect(url_for('home.login'))
+            flash("Invalid username or password")
+            return redirect(url_for("home.login"))
         login_user(user, remember=form.remember_me.data)
-        next_page = request.args.get('next')
-        if not next_page or urlsplit(next_page).netloc != '':
-            next_page = url_for('home.index')
+        next_page = request.args.get("next")
+        if not next_page or urlsplit(next_page).netloc != "":
+            next_page = url_for("home.index")
         return redirect(next_page)
-    return render_template('login.html', title='Sign In', form=form)
+    return render_template("login.html", title="Sign In", form=form)
 
 
-@home_bp.route('/logout')
+@home_bp.route("/logout")
 def logout():
     logout_user()
-    return redirect(url_for('home.index'))
+    return redirect(url_for("home.index"))
 
-@home_bp.route('/user/<username>')
+
+@home_bp.route("/user/<username>")
 @login_required
 def user(username):
     user = db.session.scalar(sa.select(User).where(User.username == username))
     posts = db.session.scalars(user.posts.select()).all()
-    blog_posts = db.session.scalars(db.select(BlogPost).where(BlogPost.user_id == user.id)).all()
-    
-    return render_template('user.html', user=user, posts=posts, blog_posts=blog_posts)
+    blog_posts = db.session.scalars(
+        db.select(BlogPost).where(BlogPost.user_id == user.id)
+    ).all()
 
-@home_bp.route('/create_event', methods=['GET', 'POST'])
+    return render_template("user.html", user=user, posts=posts, blog_posts=blog_posts)
+
+
+@home_bp.route("/create_event", methods=["GET", "POST"])
 @login_required
 def create_event():
     form = EventForm()
     if form.validate_on_submit():
         combined_dt = datetime.combine(form.date.data, form.time.data)
         post = Post(
-            body=form.description.data, 
-            author=current_user, 
+            body=form.description.data,
+            author=current_user,
             timestamp=combined_dt,
             event_type=form.event_type.data,
-            location_type=form.location_type.data  # Diese Zeile hinzufügen!
-
+            location_type=form.location_type.data,  # Diese Zeile hinzufügen!
         )
         db.session.add(post)
         db.session.commit()
-        return redirect(url_for('home.index'))
-    return render_template('create_event.html', title='Create Event', form=form)
+        return redirect(url_for("home.index"))
+    return render_template("create_event.html", title="Create Event", form=form)
 
-@home_bp.route('/edit_event/<int:id>', methods=['GET', 'POST'])
+
+@home_bp.route("/edit_event/<int:id>", methods=["GET", "POST"])
 @login_required
 def edit_event(id):
     post = db.session.get(Post, id)
@@ -90,36 +99,41 @@ def edit_event(id):
         post.body = form.description.data
         post.timestamp = datetime.combine(form.date.data, form.time.data)
         db.session.commit()
-        return redirect(url_for('home.user', username=current_user.username))
-    
-    elif request.method == 'GET':
+        return redirect(url_for("home.user", username=current_user.username))
+
+    elif request.method == "GET":
         # WICHTIG: Hier werden die alten Daten ins Formular geladen
-        form.event_type.data = post.event_type  # Setzt das Dropdown auf den gespeicherten Wert
+        form.event_type.data = (
+            post.event_type
+        )  # Setzt das Dropdown auf den gespeicherten Wert
         form.description.data = post.body
         form.date.data = post.timestamp.date()
         form.time.data = post.timestamp.time()
-        
-    return render_template('create_event.html', title='Edit Event', form=form)
 
-@home_bp.route('/delete_event/<int:id>', methods=['POST'])
+    return render_template("create_event.html", title="Edit Event", form=form)
+
+
+@home_bp.route("/delete_event/<int:id>", methods=["POST"])
 @login_required
 def delete_event(id):
     post = db.session.get(Post, id)
     if post.author != current_user:
-        flash('You cannot delete this event.')
-        return redirect(url_for('home.index'))
-    
+        flash("You cannot delete this event.")
+        return redirect(url_for("home.index"))
+
     db.session.delete(post)
     db.session.commit()
-    flash('Event has been deleted.')
-    return redirect(url_for('home.user', username=current_user.username))
+    flash("Event has been deleted.")
+    return redirect(url_for("home.user", username=current_user.username))
 
-@home_bp.route('/blog')
+
+@home_bp.route("/blog")
 def blog():
     posts = BlogPost.query.order_by(BlogPost.timestamp.desc()).all()
-    return render_template('blog.html', posts=posts)
+    return render_template("blog.html", posts=posts)
 
-@home_bp.route('/create_blog', methods=['GET', 'POST'])
+
+@home_bp.route("/create_blog", methods=["GET", "POST"])
 @login_required
 def create_blog():
     form = BlogForm()
@@ -127,41 +141,43 @@ def create_blog():
         post = BlogPost(
             title=form.title.data,
             body=form.body.data,
-            timestamp=datetime.combine(form.date.data, datetime.min.time()), 
-            author=current_user
-            )
+            timestamp=datetime.combine(form.date.data, datetime.min.time()),
+            author=current_user,
+        )
         db.session.add(post)
         db.session.commit()
-        return redirect(url_for('home.index'))
-    return render_template('create_blog.html', form=form)
+        return redirect(url_for("home.index"))
+    return render_template("create_blog.html", form=form)
 
-@home_bp.route('/delete_blog/<int:id>', methods=['POST'])
+
+@home_bp.route("/delete_blog/<int:id>", methods=["POST"])
 @login_required
 def delete_blog(id):
     blog_post = db.session.get(BlogPost, id)
     if blog_post and blog_post.author == current_user:
         db.session.delete(blog_post)
         db.session.commit()
-        flash('Blog post deleted successfully.')
+        flash("Blog post deleted successfully.")
     else:
-        flash('You cannot delete this post.')
-    return redirect(url_for('home.user', username=current_user.username))
+        flash("You cannot delete this post.")
+    return redirect(url_for("home.user", username=current_user.username))
 
-@home_bp.route('/edit_blog/<int:id>', methods=['GET', 'POST'])
+
+@home_bp.route("/edit_blog/<int:id>", methods=["GET", "POST"])
 @login_required
 def edit_blog(id):
-    blog_post = db.session.get(BlogPost, id) 
-    form = BlogForm() # Erst mal ein leeres Formular
-    
+    blog_post = db.session.get(BlogPost, id)
+    form = BlogForm()  # Erst mal ein leeres Formular
+
     if form.validate_on_submit():
         blog_post.title = form.title.data
         blog_post.body = form.body.data
         blog_post.timestamp = datetime.combine(form.date.data, datetime.min.time())
         db.session.commit()
-        return redirect(url_for('home.user', username=current_user.username))
-    
-    elif request.method == 'GET':
+        return redirect(url_for("home.user", username=current_user.username))
+
+    elif request.method == "GET":
         form.title.data = blog_post.title
         form.body.data = blog_post.body
-        
-    return render_template('edit_blog.html', form=form, title='Edit Blog')
+
+    return render_template("edit_blog.html", form=form, title="Edit Blog")

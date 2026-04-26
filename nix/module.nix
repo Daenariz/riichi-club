@@ -7,13 +7,17 @@
 }:
 
 let
-  cfg = config.services.flask_hello;
+  cfg = config.services.riichi_club;
   domain = config.networking.domain;
   fqdn = if (cfg.nginx.subdomain != "") then "${cfg.nginx.subdomain}.${domain}" else domain;
 
   python-with-packages = pkgs.python3.withPackages (
     p: with p; [
       flask
+      flask-wtf
+      flask-sqlalchemy
+      flask-migrate
+      flask-login
     ]
   );
 
@@ -29,10 +33,21 @@ let
     ;
 in
 {
-  options.services.flask_hello = {
-    enable = mkEnableOption "Flask Hello World service.";
+  options.services.riichi_club = {
+    enable = mkEnableOption "Riichi Club service.";
 
-    package = mkPackageOption pkgs "flask_hello" { };
+    package = mkPackageOption pkgs "riichi-club" { };
+
+    secretKey = mkOption {
+      type = types.str;
+      description = "Secret key for the application.";
+    };
+
+    stateDir = mkOption {
+      type = types.path;
+      default = "/var/lib/riichi_club";
+      description = "The directory to store the application's data.";
+    };
 
     port = mkOption {
       type = types.port;
@@ -60,7 +75,7 @@ in
       };
       subdomain = mkOption {
         type = types.str;
-        default = "flask_hello";
+        default = "riichi-club";
         description = "Subdomain for the Nginx virtual host. Leave empty for root domain.";
       };
       ssl = mkOption {
@@ -78,19 +93,47 @@ in
   };
 
   config = mkIf cfg.enable {
-    nixpkgs.overlays = [ inputs.flask_hello.overlays.default ];
+    nixpkgs.overlays = [ inputs.riichi-club.overlays.default ];
+
+    systemd.tmpfiles.rules = [
+      "d ${cfg.stateDir} 0750 ${cfg.user} ${cfg.group} - -"
+    ];
 
     networking.firewall.allowedTCPPorts = [
       80 # ACME challenge
       443
     ];
 
-    systemd.services.flask_hello = {
-      description = "Flask Hello World";
-      after = [ "network.target" ];
+    systemd.services.riichi_club-db-migrate = {
+      description = "Riichi Club Database Migration";
+      before = [ "riichi_club.service" ];
+      environment = {
+        PYTHONPATH = "${python-with-packages}/${python-with-packages.sitePackages}";
+        DATABASE_URI = "sqlite:///${cfg.stateDir}/app.db";
+        FLASK_APP = "run.py";
+        SECRET_KEY = cfg.secretKey;
+      };
+      serviceConfig = {
+        Type = "oneshot";
+        ExecStart = "${getExe python-with-packages} -m flask db upgrade";
+        WorkingDirectory = "${cfg.package}";
+        User = cfg.user;
+        Group = cfg.group;
+      };
+    };
+
+    systemd.services.riichi_club = {
+      description = "Riichi Club";
+      after = [
+        "network.target"
+        "riichi_club-db-migrate.service"
+      ];
+      requires = [ "riichi_club-db-migrate.service" ];
       wantedBy = [ "multi-user.target" ];
       environment = {
         PYTHONPATH = "${python-with-packages}/${python-with-packages.sitePackages}";
+        DATABASE_URI = "sqlite:///${cfg.stateDir}/app.db";
+        SECRET_KEY = cfg.secretKey;
       };
       serviceConfig = {
         ExecStart = ''

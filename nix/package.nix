@@ -4,7 +4,7 @@
 }:
 
 python3.pkgs.buildPythonApplication rec {
-  pname = "flask_hello";
+  pname = "riichi-club";
   version = "0.1.0";
   pyproject = true;
 
@@ -15,6 +15,11 @@ python3.pkgs.buildPythonApplication rec {
     flask-wtf
     flask-sqlalchemy
     flask-migrate
+    flask-login
+  ];
+
+  checkInputs = with python3.pkgs; [
+    pytest
   ];
 
   src = ../.;
@@ -23,12 +28,13 @@ python3.pkgs.buildPythonApplication rec {
     runHook preInstall
 
     mkdir -p $out
-    cp -r $src/${pname} $out/
-    cp $src/app.py $out/
-    chmod +x $out/app.py
+    cp -r $src/app $out/
+    cp -r $src/migrations $out/
+    cp $src/run.py $out/
+    cp $src/config.py $out/
 
     runHook postInstall
   '';
 
-  doCheck = false;
+  doCheck = true;
 }
