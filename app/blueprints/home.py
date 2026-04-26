@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, flash, redirect, url_for, request
+from flask import Blueprint, render_template, flash, redirect, url_for, request, current_app
 from app.forms import LoginForm, EditProfileForm, EventForm, BlogForm
 from flask_login import login_user, current_user, logout_user, login_required
 import sqlalchemy as sa
@@ -23,9 +23,11 @@ def before_request():
 def index():
     query = sa.select(Post).order_by(Post.timestamp.desc())
     posts = db.session.scalars(query).all()
-    news = db.session.scalars(
-        sa.select(BlogPost).order_by(BlogPost.timestamp.desc())
-    ).all()
+    page = request.args.get("page", 1, type=int)
+    query = sa.select(BlogPost).order_by(BlogPost.timestamp.desc())
+    news = db.paginate(
+        query, page=page, per_page=current_app.config["POSTS_PER_PAGE"], error_out=False
+    )
 
     return render_template("index.html", title="Home Page", posts=posts, news=news)
 

@@ -10,11 +10,93 @@ body {
 }
 
 .main-container {
-    background-color: rgba(255, 255, 255, 0.92); /* Weiße Box mit leichter Transparenz */
-    color: #333;
+    background-color: var(--main-bg-color);
+    color: var(--main-text-color);
     max-width: 900px;
     margin: 40px auto; 
     padding: 40px;
     border-radius: 15px;
     box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+}
+
+.hero-section {
+    text-align: center;
+    padding: 50px 20px;
+    background-color: var(--hero-bg-color);
+    color: var(--hero-text-color);
+    border-radius: 8px;
+}
+
+.news-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+.news-container h2 {
+    border-bottom: 2px solid var(--section-border-color);
+    padding-bottom: 15px;
+    color: var(--main-text-color);
+}
+
+.news-item {
+    margin-bottom: 30px;
+    padding: 15px;
+    border: 1px solid var(--news-border-color);
+    border-radius: 8px;
+}
+
+.news-item h3 {
+    margin-top: 0;
+    color: var(--news-title-color);
+}
+
+.news-item small {
+    color: var(--news-meta-color);
+}
+
+.news-item p {
+    line-height: 1.6;
+    white-space: pre-line; /* This will render newlines correctly */
+}
+
+.pagination {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.pagination a {
+    text-decoration: none;
+    padding: 8px 16px;
+    background-color: var(--news-title-color);
+    color: black;
+    border-radius: 4px;
+    margin-left: 10px;
+}
+
+.pagination a:first-child {
+    margin-left: 0;
+}
+:root {
+    --main-bg-color: rgba(255, 255, 255, 0.92);
+    --main-text-color: #333;
+    --hero-bg-color: #1a1a1a;
+    --hero-text-color: #f0f0f0;
+    --news-border-color: #eee;
+    --news-title-color: #d4af37;
+    --news-meta-color: #888;
+    --section-border-color: #d4af37;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --main-bg-color: rgba(40, 40, 40, 0.92);
+        --main-text-color: #f0f0f0;
+        --hero-bg-color: #1a1a1a;
+        --hero-text-color: #f0f0f0;
+        --news-border-color: #444;
+        --news-title-color: #d4af37;
+        --news-meta-color: #aaa;
+        --section-border-color: #d4af37;
+    }
 }

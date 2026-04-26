@@ -1,29 +1,35 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <div class="hero-section" style="text-align: center; padding: 50px 20px; background-color: #1a1a1a; color: #f0f0f0; border-radius: 8px;">
+<div class="hero-section">
     <h1 style="font-size: 3rem; color: #d4af37;">国士無双 - Kokushi Musou</h1>
     <p style="font-style: italic; font-size: 1.2rem; margin-top: 20px;">
         "Practice for a thousand days to refine the steel; practice for ten thousand days to polish the spirit."<br>
         <strong>— 宮本 武蔵 (Miyamoto Musashi)</strong>
     </p>
-    <!-- <div style="margin-top: 40px;"> -->
-    <!--     <a href="#join" style="background-color: #d4af37; color: black; padding: 15px 30px; text-decoration: none; font-weight: bold; border-radius: 5px;">JOIN THE CLUB</a> -->
-    <!-- </div> -->
 </div>
 
-<div class="news-container" style="max-width: 800px; margin: 40px auto; padding: 20px;">
-    <h2 style="border-bottom: 2px solid #d4af37; padding-bottom: 15px; color: #333;">NEWS</h2>
+<div class="news-container">
+    <h2>NEWS</h2>
     
-    {% for post in news %}
-    <div style="margin-bottom: 30px; padding: 15px; border: 1px solid #eee; border-radius: 8px;">
-        <h3 style="margin-top: 0; color: #d4af37;">{{ post.title }}</h3>
-        <small style="color: #888;">{{ post.timestamp.strftime('%d.%m.%Y') }}</small>
-        <p style="line-height: 1.6;">{{ post.body }}</p>
+    {% for post in news.items %}
+    <div class="news-item">
+        <h3>{{ post.title }}</h3>
+        <small>{{ post.timestamp.strftime('%d.%m.%Y') }}</small>
+        <p>{{ post.body }}</p>
     </div>
     {% else %}
         <p>No news available.</p>
     {% endfor %}
+</div>
+
+<div class="pagination">
+    {% if news.has_prev %}
+        <a href="{{ url_for('home.index', page=news.prev_num) }}">&laquo; Newer Posts</a>
+    {% endif %}
+    {% if news.has_next %}
+        <a href="{{ url_for('home.index', page=news.next_num) }}">Older Posts &raquo;</a>
+    {% endif %}
 </div>
 
 <div id="about" style="padding: 40px 20px;">
