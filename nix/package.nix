@@ -18,6 +18,10 @@ python3.pkgs.buildPythonApplication rec {
     flask-login
   ];
 
+  checkInputs = with python3.pkgs; [
+    pytest
+  ];
+
   src = ../.;
 
   installPhase = ''
@@ -32,5 +36,5 @@ python3.pkgs.buildPythonApplication rec {
     runHook postInstall
   '';
 
-  doCheck = false;
+  doCheck = true;
 }
