@@ -35,7 +35,7 @@ def not_found_error(error):
 # return app
 
 
-@babel.locale_selector
+@babel.localeselector
 def get_locale():
     from flask import request, current_app
     return request.accept_languages.best_match(current_app.config['LANGUAGES'])
