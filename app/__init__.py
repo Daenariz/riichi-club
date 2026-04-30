@@ -5,6 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_babel import Babel
+from flask_babel.cli import babel_cli
 
 
 def get_locale():
@@ -19,6 +20,7 @@ migrate = Migrate(app, db)
 login = LoginManager(app)
 login.login_view = "home.login"
 babel = Babel(app, locale_selector=get_locale)
+app.cli.add_command(babel_cli, "babel")
 
 #    from app import routes ### statt routes.py haben wir __init__.py
  ##   from flask_hello import models
