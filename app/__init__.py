@@ -4,6 +4,7 @@ from config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
+from flask_babel import Babel
 
 
 # def create_app():
@@ -13,6 +14,7 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 login = LoginManager(app)
 login.login_view = "home.login"
+babel = Babel(app)
 
 #    from app import routes ### statt routes.py haben wir __init__.py
 ##   from flask_hello import models
@@ -31,3 +33,9 @@ def not_found_error(error):
 
 
 # return app
+
+
+@babel.localeselector
+def get_locale():
+    from flask import request, current_app
+    return request.accept_languages.best_match(current_app.config['LANGUAGES'])
