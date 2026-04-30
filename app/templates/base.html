@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ get_locale() }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,12 +9,12 @@
 <body>
 
     <nav class="navbar" style="background: rgba(0,0,0,0.8); padding: 10px; color: white;">
-        <a href="{{ url_for('home.index') }}" style="color: white;">Home</a>
+        <a href="{{ url_for('home.index') }}" style="color: white;">{{ _('Home') }}</a>
         {% if current_user.is_anonymous %}
-            <a href="{{ url_for('home.login') }}" style="color: white;">Login</a>
+            <a href="{{ url_for('home.login') }}" style="color: white;">{{ _('Login') }}</a>
         {% else %}
-            <a href="{{ url_for('home.user', username=current_user.username) }}" style="color: white;">Profile</a>
-            <a href="{{ url_for('home.logout') }}" style="color: white;">Logout</a>
+            <a href="{{ url_for('home.user', username=current_user.username) }}" style="color: white;">{{ _('Profile') }}</a>
+            <a href="{{ url_for('home.logout') }}" style="color: white;">{{ _('Logout') }}</a>
         {% endif %}
     </nav>
 
