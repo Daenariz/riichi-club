@@ -23,13 +23,12 @@ def before_request():
 def index():
     query = sa.select(Post).order_by(Post.timestamp.desc())
     posts = db.session.scalars(query).all()
-    page = request.args.get("page", 1, type=int)
     query = sa.select(BlogPost).order_by(BlogPost.timestamp.desc())
-    news = db.paginate(
-        query, page=page, per_page=current_app.config["POSTS_PER_PAGE"], error_out=False
-    )
+    latest_news = db.session.scalar(query)
 
-    return render_template("index.html", title="Home Page", posts=posts, news=news)
+    return render_template(
+        "index.html", title="Home Page", posts=posts, latest_news=latest_news
+    )
 
 
 @home_bp.route("/login", methods=["GET", "POST"])

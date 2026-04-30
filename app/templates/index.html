@@ -12,23 +12,14 @@
 <div class="news-container">
     <h2>NEWS</h2>
     
-    {% for post in news.items %}
+    {% if latest_news %}
     <div class="news-item">
-        <h3>{{ post.title }}</h3>
-        <small>{{ post.timestamp.strftime('%d.%m.%Y') }}</small>
-        <p>{{ post.body }}</p>
+        <h3><a href="{{ url_for('home.view_blog', id=latest_news.id) }}">{{ latest_news.title }}</a></h3>
+        <small>{{ latest_news.timestamp.strftime('%d.%m.%Y') }}</small>
+        <p>{{ latest_news.body | truncate(200, True) }}</p>
     </div>
     {% else %}
         <p>No news available.</p>
-    {% endfor %}
-</div>
-
-<div class="pagination">
-    {% if news.has_prev %}
-        <a href="{{ url_for('home.index', page=news.prev_num) }}">&laquo; Newer Posts</a>
-    {% endif %}
-    {% if news.has_next %}
-        <a href="{{ url_for('home.index', page=news.next_num) }}">Older Posts &raquo;</a>
     {% endif %}
 </div>
 
