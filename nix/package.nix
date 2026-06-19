@@ -16,7 +16,6 @@ python3.pkgs.buildPythonApplication rec {
     flask-sqlalchemy
     flask-migrate
     flask-login
-    flask-babel
   ];
 
   checkInputs = with python3.pkgs; [

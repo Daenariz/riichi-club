@@ -9,4 +9,3 @@ class Config:
         "DATABASE_URI"
     ) or "sqlite:///" + os.path.join(basedir, "app.db")
     POSTS_PER_PAGE = 3
-    LANGUAGES = ["en", "de"]
