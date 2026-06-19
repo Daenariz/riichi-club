@@ -1,6 +1,0 @@
-diff a/config.py b/config.py	(rejected hunks)
-@@ -9,3 +9,4 @@ class Config:
-         "DATABASE_URI"
-     ) or "sqlite:///" + os.path.join(basedir, "app.db")
-     POSTS_PER_PAGE = 3
-+    LANGUAGES = ["en", "de"]
