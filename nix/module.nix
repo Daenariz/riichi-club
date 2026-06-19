@@ -14,6 +14,7 @@ let
   python-with-packages = pkgs.python3.withPackages (
     p: with p; [
       flask
+      flask-babel
     ]
   );
 
