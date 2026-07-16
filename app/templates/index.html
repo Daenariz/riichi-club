@@ -4,13 +4,13 @@
 <div class="hero-section">
     <h1 style="font-size: 3rem; color: #d4af37;">国士無双 - Kokushi Musou</h1>
     <p style="font-style: italic; font-size: 1.2rem; margin-top: 20px;">
-        "Practice for a thousand days to refine the steel; practice for ten thousand days to polish the spirit."<br>
+        "{{ _('Practice for a thousand days to refine the steel; practice for ten thousand days to polish the spirit.') }}"<br>
         <strong>— 宮本 武蔵 (Miyamoto Musashi)</strong>
     </p>
 </div>
 
 <div class="news-container">
-    <h2>NEWS</h2>
+    <h2>{{ _('NEWS') }}</h2>
     
     {% if latest_news %}
     <div class="news-item">
@@ -19,25 +19,25 @@
         <p>{{ latest_news.body | truncate(200, True) }}</p>
     </div>
     {% else %}
-        <p>No news available.</p>
+        <p>{{ _('No news available.') }}</p>
     {% endif %}
 </div>
 
 <div id="about" style="padding: 40px 20px;">
-    <h2>About Our Club</h2>
-    <p>We are an unofficial Riichi Mahjong community at the Technical University. Whether you are aiming for a Yakuman or just want to learn the basics, you are welcome!</p>
+    <h2>{{ _('About Our Club') }}</h2>
+    <p>{{ _('We are an unofficial Riichi Mahjong community at the Technical University. Whether you are aiming for a Yakuman or just want to learn the basics, you are welcome!') }}</p>
     
-    <h3>Why Kokushi Musou?</h3>
-    <p>Named after the legendary "Thirteen Orphans" hand, we believe in the beauty of assembling something extraordinary from scattered tiles.</p>
+    <h3>{{ _('Why Kokushi Musou?') }}</h3>
+    <p>{{ _('Named after the legendary "Thirteen Orphans" hand, we believe in the beauty of assembling something extraordinary from scattered tiles.') }}</p>
 </div>
 
 <div id="join" style="padding: 40px 20px; border-top: 1px solid #444;">
-    <h2>Meet Us</h2>
-    <p>We meet regularly to play and discuss strategies. Reach out to us or create an account to stay updated!</p>
+    <h2>{{ _('Meet Us') }}</h2>
+    <p>{{ _('We meet regularly to play and discuss strategies. Reach out to us or create an account to stay updated!') }}</p>
 </div>
 
 <div class="events-container" style="max-width: 800px; margin: 40px auto; font-family: 'Arial', sans-serif;">
-    <h2 style="border-bottom: 2px solid #d4af37; padding-bottom: 15px; color: #333; letter-spacing: 1px;">UPCOMING EVENTS</h2>
+    <h2 style="border-bottom: 2px solid #d4af37; padding-bottom: 15px; color: #333; letter-spacing: 1px;">{{ _('UPCOMING EVENTS') }}</h2>
     
     {% for post in posts %}
     <details id="event-{{ post.id }}" style="scroll-margin-top: 100px; ...">
@@ -45,11 +45,11 @@
       <div style="display: flex; flex-direction: column;">
       <h3 style="margin: 0; color: #d4af37; font-size: 1.5rem;">
         {% if post.event_type == 'workshop' %}
-          Einsteigerworkshop
+          {{ _('Einsteigerworkshop') }}
         {% elif post.event_type == 'suzume' %}
-          Suzume-Jong Schnupperabend
+          {{ _('Suzume-Jong Schnupperabend') }}
         {% else %}
-          {{ post.event_type if post.event_type else 'Club Event' }}
+          {{ post.event_type if post.event_type else _('Club Event') }}
       {% endif %}
 </h3>
 <span style="color: #666; font-size: 0.95rem; margin-top: 5px;">
@@ -59,13 +59,13 @@
 
             <div style="text-align: right; border-left: 1px solid #ddd; padding-left: 20px;">
                 <span style="display: block; font-weight: bold; font-size: 1.1rem; color: #333;">
-                    {{ post.timestamp.strftime('%H:%M') }} Uhr
+                    {{ post.timestamp.strftime('%H:%M') }} {{ _('Uhr') }}
                 </span>
    <div style="font-size: 0.85rem; color: #555;">
     {% if post.location_type == 'online' %}
-        🌐 Discord (Online)
+        🌐 {{ _('Discord (Online)') }}
     {% else %}
-        📍 TH Köln (Lokal)
+        📍 {{ _('TH Köln (Lokal)') }}
     {% endif %}
 <!-- </div> -->
             </div>
@@ -77,8 +77,8 @@
             </div>
             
             <div style="margin-top: 25px; background: #fff9e6; padding: 15px; border-radius: 4px; text-align: center; border: 1px solid #ffecb3;">
-                <strong style="color: #333;">Interesse?</strong><br>
-                <a href="mailto:mahjong@eato.negitorodon.de" style="color: #d4af37; text-decoration: none; font-weight: bold;">Anmeldung per E-Mail an mahjong@eato.negitorodon.de</a>
+                <strong style="color: #333;">{{ _('Interesse?') }}</strong><br>
+                <a href="mailto:mahjong@eato.negitorodon.de" style="color: #d4af37; text-decoration: none; font-weight: bold;">{{ _('Anmeldung per E-Mail an mahjong@eato.negitorodon.de') }}</a>
             </div>
         </div>
     </details>

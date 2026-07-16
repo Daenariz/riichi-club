@@ -1,13 +1,16 @@
 import os  ##
-from flask import Flask, request, current_app, render_template
+from flask import Flask, request, session, current_app, render_template
 from config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
-from flask_babel import Babel
+from flask_babel import Babel, _
 
 
 def get_locale():
+    lang = session.get("lang")
+    if lang in current_app.config["LANGUAGES"]:
+        return lang
     return request.accept_languages.best_match(current_app.config["LANGUAGES"])
 
 
@@ -37,7 +40,7 @@ from . import models  ##
 
 @app.errorhandler(404)
 def not_found_error(error):
-    return render_template("errors.html", error="Page not found"), 404
+    return render_template("errors.html", error=_("Page not found")), 404
 
 
 # return app

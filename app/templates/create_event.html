@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Neues Event erstellen</h1>
+    <h1>{{ _('Neues Event erstellen') }}</h1>
     <form action="" method="post">
         {{ form.hidden_tag() }}
         <p>{{ form.event_type.label }}<br>{{ form.event_type() }}</p>
