@@ -32,3 +32,4 @@ venv/
 
 # Nix-related files
 result
+.aider*

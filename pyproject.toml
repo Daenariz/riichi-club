@@ -10,7 +10,6 @@ dependencies = [
     "flask-wtf",
     "flask-sqlalchemy",
     "flask-migrate",
-    "flask-babel",
 ]
 
 [tool.setuptools.packages.find]

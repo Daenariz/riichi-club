@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <article>
+        <h1>{{ post.title }}</h1>
+        <p><small>Posted by {{ post.author.username }} on {{ post.timestamp.strftime('%Y-%m-%d') }}</small></p>
+        <div>
+            {{ post.body | safe }}
+        </div>
+    </article>
+    <hr>
+    <a href="{{ url_for('home.blog') }}">Back to Blog</a>
+{% endblock %}
