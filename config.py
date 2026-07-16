@@ -9,3 +9,5 @@ class Config:
         "DATABASE_URI"
     ) or "sqlite:///" + os.path.join(basedir, "app.db")
     POSTS_PER_PAGE = 3
+    LANGUAGES = ["en", "de"]
+    BABEL_TRANSLATION_DIRECTORIES = os.path.join(basedir, "translations")

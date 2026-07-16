@@ -1,0 +1,39 @@
+# German translations for riichi-club.
+# Copyright (C) 2026 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: riichi-club 0.1.0\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2026-07-16 14:15+0200\n"
+"PO-Revision-Date: 2026-07-16 14:15+0200\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: de\n"
+"Language-Team: de <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: app/templates/base.html:12
+msgid "Home"
+msgstr "Startseite"
+
+#: app/templates/base.html:13
+msgid "Blog"
+msgstr "Blog"
+
+#: app/templates/base.html:15
+msgid "Login"
+msgstr "Anmelden"
+
+#: app/templates/base.html:17
+msgid "Profile"
+msgstr "Profil"
+
+#: app/templates/base.html:18
+msgid "Logout"
+msgstr "Abmelden"
