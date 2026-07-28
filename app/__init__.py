@@ -28,6 +28,7 @@ babel = Babel(app, locale_selector=get_locale)
 def inject_locale():
     return dict(get_locale=get_locale)
 
+
 #    from app import routes ### statt routes.py haben wir __init__.py
 ##   from flask_hello import models
 

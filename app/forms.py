@@ -26,14 +26,14 @@ class EventForm(FlaskForm):
         choices=[("online", _l("Online")), ("lokal", _l("Lokal"))],
     )
     date = DateField(
-        _l("Date"), format="%Y-%m-%d", validators=[DataRequired(_l("This field is required."))]
+        _l("Date"),
+        format="%Y-%m-%d",
+        validators=[DataRequired(_l("This field is required."))],
     )
     time = TimeField(
         _l("Time"), validators=[DataRequired(_l("This field is required."))]
     )
-    description = TextAreaField(
-        _l("Description"), validators=[Length(max=2000)]
-    )
+    description = TextAreaField(_l("Description"), validators=[Length(max=2000)])
     submit = SubmitField(_l("Event erstellen"))
 
 
@@ -52,9 +52,7 @@ class EditProfileForm(FlaskForm):
     username = StringField(
         _l("Username"), validators=[DataRequired(_l("This field is required."))]
     )
-    about_me = TextAreaField(
-        _l("About Me"), validators=[Length(min=0, max=140)]
-    )
+    about_me = TextAreaField(_l("About Me"), validators=[Length(min=0, max=140)])
     submit = SubmitField(_l("Submit"))
 
 
@@ -74,6 +72,8 @@ class BlogForm(FlaskForm):
         ],
     )
     date = DateField(
-        _l("Date"), format="%Y-%m-%d", validators=[DataRequired(_l("This field is required."))]
+        _l("Date"),
+        format="%Y-%m-%d",
+        validators=[DataRequired(_l("This field is required."))],
     )
     submit = SubmitField(_l("Post"))
