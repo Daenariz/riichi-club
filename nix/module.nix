@@ -18,6 +18,7 @@ let
       flask-sqlalchemy
       flask-migrate
       flask-login
+      flask-babel
     ]
   );
 

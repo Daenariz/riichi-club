@@ -1,0 +1,313 @@
+# Translations template for PROJECT.
+# Copyright (C) 2026 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2026-07-16 14:57+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: app/__init__.py:43
+msgid "Page not found"
+msgstr ""
+
+#: app/forms.py:18
+msgid "Event Type"
+msgstr ""
+
+#: app/forms.py:20 app/templates/index.html:48
+msgid "Einsteigerworkshop"
+msgstr ""
+
+#: app/forms.py:21
+msgid "Suzume Jong - Mahjong Schnupperabend"
+msgstr ""
+
+#: app/forms.py:25
+msgid "Location"
+msgstr ""
+
+#: app/forms.py:26
+msgid "Online"
+msgstr ""
+
+#: app/forms.py:26
+msgid "Lokal"
+msgstr ""
+
+#: app/forms.py:29 app/forms.py:77
+msgid "Date"
+msgstr ""
+
+#: app/forms.py:29 app/forms.py:32 app/forms.py:42 app/forms.py:45
+#: app/forms.py:53 app/forms.py:65 app/forms.py:72 app/forms.py:77
+msgid "This field is required."
+msgstr ""
+
+#: app/forms.py:32
+msgid "Time"
+msgstr ""
+
+#: app/forms.py:35
+msgid "Description"
+msgstr ""
+
+#: app/forms.py:37
+msgid "Event erstellen"
+msgstr ""
+
+#: app/forms.py:42 app/forms.py:53
+msgid "Username"
+msgstr ""
+
+#: app/forms.py:45
+msgid "Password"
+msgstr ""
+
+#: app/forms.py:47
+msgid "Remember Me"
+msgstr ""
+
+#: app/forms.py:48 app/templates/login.html:4
+msgid "Sign In"
+msgstr ""
+
+#: app/forms.py:56
+msgid "About Me"
+msgstr ""
+
+#: app/forms.py:58
+msgid "Submit"
+msgstr ""
+
+#: app/forms.py:63
+msgid "Title"
+msgstr ""
+
+#: app/forms.py:70
+msgid "Content"
+msgstr ""
+
+#: app/forms.py:79
+msgid "Post"
+msgstr ""
+
+#: app/blueprints/home.py:51
+msgid "Invalid username or password"
+msgstr ""
+
+#: app/blueprints/home.py:129
+msgid "You cannot delete this event."
+msgstr ""
+
+#: app/blueprints/home.py:134
+msgid "Event has been deleted."
+msgstr ""
+
+#: app/blueprints/home.py:181
+msgid "Blog post deleted successfully."
+msgstr ""
+
+#: app/blueprints/home.py:183
+msgid "You cannot delete this post."
+msgstr ""
+
+#: app/templates/_post.html:4
+msgid "says:"
+msgstr ""
+
+#: app/templates/base.html:13
+msgid "Home"
+msgstr ""
+
+#: app/templates/base.html:14 app/templates/blog.html:15
+msgid "Blog"
+msgstr ""
+
+#: app/templates/base.html:16
+msgid "Login"
+msgstr ""
+
+#: app/templates/base.html:18
+msgid "Profile"
+msgstr ""
+
+#: app/templates/base.html:19
+msgid "Logout"
+msgstr ""
+
+#: app/templates/blog.html:22
+msgid "Posted on:"
+msgstr ""
+
+#: app/templates/blog.html:32
+msgid "Previous"
+msgstr ""
+
+#: app/templates/blog.html:43
+msgid "current"
+msgstr ""
+
+#: app/templates/blog.html:52
+msgid "Next"
+msgstr ""
+
+#: app/templates/create_blog.html:4
+msgid "Create Blogpost"
+msgstr ""
+
+#: app/templates/create_event.html:4
+msgid "Neues Event erstellen"
+msgstr ""
+
+#: app/templates/edit_blog.html:4
+msgid "Edit Blogpost"
+msgstr ""
+
+#: app/templates/edit_profile.html:4
+msgid "Edit Profile"
+msgstr ""
+
+#: app/templates/errors.html:4
+msgid "Error"
+msgstr ""
+
+#: app/templates/errors.html:6
+msgid "Go Home"
+msgstr ""
+
+#: app/templates/index.html:7
+msgid ""
+"Practice for a thousand days to refine the steel; practice for ten "
+"thousand days to polish the spirit."
+msgstr ""
+
+#: app/templates/index.html:13
+msgid "NEWS"
+msgstr ""
+
+#: app/templates/index.html:22
+msgid "No news available."
+msgstr ""
+
+#: app/templates/index.html:27
+msgid "About Our Club"
+msgstr ""
+
+#: app/templates/index.html:28
+msgid ""
+"We are an unofficial Riichi Mahjong community at the Technical "
+"University. Whether you are aiming for a Yakuman or just want to learn "
+"the basics, you are welcome!"
+msgstr ""
+
+#: app/templates/index.html:30
+msgid "Why Kokushi Musou?"
+msgstr ""
+
+#: app/templates/index.html:31
+msgid ""
+"Named after the legendary \"Thirteen Orphans\" hand, we believe in the "
+"beauty of assembling something extraordinary from scattered tiles."
+msgstr ""
+
+#: app/templates/index.html:35
+msgid "Meet Us"
+msgstr ""
+
+#: app/templates/index.html:36
+msgid ""
+"We meet regularly to play and discuss strategies. Reach out to us or "
+"create an account to stay updated!"
+msgstr ""
+
+#: app/templates/index.html:40
+msgid "UPCOMING EVENTS"
+msgstr ""
+
+#: app/templates/index.html:50
+msgid "Suzume-Jong Schnupperabend"
+msgstr ""
+
+#: app/templates/index.html:52
+msgid "Club Event"
+msgstr ""
+
+#: app/templates/index.html:62
+msgid "Uhr"
+msgstr ""
+
+#: app/templates/index.html:66
+msgid "Discord (Online)"
+msgstr ""
+
+#: app/templates/index.html:68
+msgid "TH Köln (Lokal)"
+msgstr ""
+
+#: app/templates/index.html:80
+msgid "Interesse?"
+msgstr ""
+
+#: app/templates/index.html:81
+msgid "Anmeldung per E-Mail an mahjong@eato.negitorodon.de"
+msgstr ""
+
+#: app/templates/user.html:3
+msgid "User:"
+msgstr ""
+
+#: app/templates/user.html:9
+msgid "Create New Event"
+msgstr ""
+
+#: app/templates/user.html:10
+msgid "Write New Blog Post"
+msgstr ""
+
+#: app/templates/user.html:14
+msgid "Your Events"
+msgstr ""
+
+#: app/templates/user.html:19 app/templates/user.html:34
+msgid "Edit"
+msgstr ""
+
+#: app/templates/user.html:21 app/templates/user.html:36
+msgid "Are you sure?"
+msgstr ""
+
+#: app/templates/user.html:21 app/templates/user.html:36
+msgid "Delete"
+msgstr ""
+
+#: app/templates/user.html:27
+msgid "Your Blog Posts"
+msgstr ""
+
+#: app/templates/user.html:41
+msgid "No blog posts yet."
+msgstr ""
+
+#: app/templates/view_blog.html:6
+msgid "Posted by"
+msgstr ""
+
+#: app/templates/view_blog.html:6
+msgid "on"
+msgstr ""
+
+#: app/templates/view_blog.html:12
+msgid "Back to Blog"
+msgstr ""
+

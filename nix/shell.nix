@@ -12,6 +12,8 @@ pkgs.mkShell {
         flask-sqlalchemy
         flask-migrate
         flask-login
+        flask-babel
+        pytest
         gunicorn
       ]
     ))

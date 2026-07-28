@@ -1,9 +1,20 @@
-from flask import Blueprint, render_template, flash, redirect, url_for, request, current_app, abort
+from flask import (
+    Blueprint,
+    render_template,
+    flash,
+    redirect,
+    url_for,
+    request,
+    session,
+    current_app,
+    abort,
+)
 from app.forms import LoginForm, EditProfileForm, EventForm, BlogForm
 from flask_login import login_user, current_user, logout_user, login_required
 import sqlalchemy as sa
 from app import db
 from app.models import User, Post, BlogPost
+from flask_babel import _
 from urllib.parse import urlsplit
 from datetime import datetime, timezone
 
@@ -31,6 +42,12 @@ def index():
     )
 
 
+@home_bp.route("/set_language/<lang>")
+def set_language(lang):
+    session["lang"] = lang
+    return redirect(request.referrer or url_for("home.index"))
+
+
 @home_bp.route("/login", methods=["GET", "POST"])
 def login():
     if current_user.is_authenticated:
@@ -41,7 +58,7 @@ def login():
             sa.select(User).where(User.username == form.username.data)
         )
         if user is None or not user.check_password(form.password.data):
-            flash("Invalid username or password")
+            flash(_("Invalid username or password"))
             return redirect(url_for("home.login"))
         login_user(user, remember=form.remember_me.data)
         next_page = request.args.get("next")
@@ -119,12 +136,12 @@ def edit_event(id):
 def delete_event(id):
     post = db.session.get(Post, id)
     if post.author != current_user:
-        flash("You cannot delete this event.")
+        flash(_("You cannot delete this event."))
         return redirect(url_for("home.index"))
 
     db.session.delete(post)
     db.session.commit()
-    flash("Event has been deleted.")
+    flash(_("Event has been deleted."))
     return redirect(url_for("home.user", username=current_user.username))
 
 
@@ -136,15 +153,17 @@ def blog():
         query, page=page, per_page=current_app.config["POSTS_PER_PAGE"], error_out=False
     )
     posts = pagination.items
-    return render_template("blog.html", title="Blog", posts=posts, pagination=pagination)
+    return render_template(
+        "blog.html", title="Blog", posts=posts, pagination=pagination
+    )
 
 
-@home_bp.route('/blog/<int:id>')
+@home_bp.route("/blog/<int:id>")
 def view_blog(id):
     post = db.session.get(BlogPost, id)
     if post is None:
         abort(404)
-    return render_template('view_blog.html', post=post, title=post.title)
+    return render_template("view_blog.html", post=post, title=post.title)
 
 
 @home_bp.route("/create_blog", methods=["GET", "POST"])
@@ -171,9 +190,9 @@ def delete_blog(id):
     if blog_post and blog_post.author == current_user:
         db.session.delete(blog_post)
         db.session.commit()
-        flash("Blog post deleted successfully.")
+        flash(_("Blog post deleted successfully."))
     else:
-        flash("You cannot delete this post.")
+        flash(_("You cannot delete this post."))
     return redirect(url_for("home.user", username=current_user.username))
 
 
