@@ -31,6 +31,7 @@ python3.pkgs.buildPythonApplication rec {
     mkdir -p $out
     cp -r $src/app $out/
     cp -r $src/migrations $out/
+    cp -r $src/translations $out/
     cp $src/run.py $out/
     cp $src/config.py $out/
 

@@ -16,11 +16,11 @@ msgstr ""
 
 #: app/__init__.py:43
 msgid "Page not found"
-msgstr ""
+msgstr "Page not found"
 
 #: app/forms.py:18
 msgid "Event Type"
-msgstr ""
+msgstr "Event Type"
 
 #: app/forms.py:20 app/templates/index.html:48
 msgid "Einsteigerworkshop"
@@ -32,11 +32,11 @@ msgstr "Suzume Jong - Mahjong Taster Session"
 
 #: app/forms.py:25
 msgid "Location"
-msgstr ""
+msgstr "Location"
 
 #: app/forms.py:26
 msgid "Online"
-msgstr ""
+msgstr "Online"
 
 #: app/forms.py:26
 msgid "Lokal"
@@ -44,20 +44,20 @@ msgstr "On-site"
 
 #: app/forms.py:29 app/forms.py:77
 msgid "Date"
-msgstr ""
+msgstr "Date"
 
 #: app/forms.py:29 app/forms.py:32 app/forms.py:42 app/forms.py:45
 #: app/forms.py:53 app/forms.py:65 app/forms.py:72 app/forms.py:77
 msgid "This field is required."
-msgstr ""
+msgstr "This field is required."
 
 #: app/forms.py:32
 msgid "Time"
-msgstr ""
+msgstr "Time"
 
 #: app/forms.py:35
 msgid "Description"
-msgstr ""
+msgstr "Description"
 
 #: app/forms.py:37
 msgid "Event erstellen"
@@ -65,103 +65,103 @@ msgstr "Create Event"
 
 #: app/forms.py:42 app/forms.py:53
 msgid "Username"
-msgstr ""
+msgstr "Username"
 
 #: app/forms.py:45
 msgid "Password"
-msgstr ""
+msgstr "Password"
 
 #: app/forms.py:47
 msgid "Remember Me"
-msgstr ""
+msgstr "Remember Me"
 
 #: app/forms.py:48 app/templates/login.html:4
 msgid "Sign In"
-msgstr ""
+msgstr "Sign In"
 
 #: app/forms.py:56
 msgid "About Me"
-msgstr ""
+msgstr "About Me"
 
 #: app/forms.py:58
 msgid "Submit"
-msgstr ""
+msgstr "Submit"
 
 #: app/forms.py:63
 msgid "Title"
-msgstr ""
+msgstr "Title"
 
 #: app/forms.py:70
 msgid "Content"
-msgstr ""
+msgstr "Content"
 
 #: app/forms.py:79
 msgid "Post"
-msgstr ""
+msgstr "Post"
 
 #: app/blueprints/home.py:51
 msgid "Invalid username or password"
-msgstr ""
+msgstr "Invalid username or password"
 
 #: app/blueprints/home.py:129
 msgid "You cannot delete this event."
-msgstr ""
+msgstr "You cannot delete this event."
 
 #: app/blueprints/home.py:134
 msgid "Event has been deleted."
-msgstr ""
+msgstr "Event has been deleted."
 
 #: app/blueprints/home.py:181
 msgid "Blog post deleted successfully."
-msgstr ""
+msgstr "Blog post deleted successfully."
 
 #: app/blueprints/home.py:183
 msgid "You cannot delete this post."
-msgstr ""
+msgstr "You cannot delete this post."
 
 #: app/templates/_post.html:4
 msgid "says:"
-msgstr ""
+msgstr "says:"
 
 #: app/templates/base.html:13
 msgid "Home"
-msgstr ""
+msgstr "Home"
 
 #: app/templates/base.html:14 app/templates/blog.html:15
 msgid "Blog"
-msgstr ""
+msgstr "Blog"
 
 #: app/templates/base.html:16
 msgid "Login"
-msgstr ""
+msgstr "Login"
 
 #: app/templates/base.html:18
 msgid "Profile"
-msgstr ""
+msgstr "Profile"
 
 #: app/templates/base.html:19
 msgid "Logout"
-msgstr ""
+msgstr "Logout"
 
 #: app/templates/blog.html:22
 msgid "Posted on:"
-msgstr ""
+msgstr "Posted on:"
 
 #: app/templates/blog.html:32
 msgid "Previous"
-msgstr ""
+msgstr "Previous"
 
 #: app/templates/blog.html:43
 msgid "current"
-msgstr ""
+msgstr "current"
 
 #: app/templates/blog.html:52
 msgid "Next"
-msgstr ""
+msgstr "Next"
 
 #: app/templates/create_blog.html:4
 msgid "Create Blogpost"
-msgstr ""
+msgstr "Create Blogpost"
 
 #: app/templates/create_event.html:4
 msgid "Neues Event erstellen"
@@ -169,37 +169,39 @@ msgstr "Create New Event"
 
 #: app/templates/edit_blog.html:4
 msgid "Edit Blogpost"
-msgstr ""
+msgstr "Edit Blogpost"
 
 #: app/templates/edit_profile.html:4
 msgid "Edit Profile"
-msgstr ""
+msgstr "Edit Profile"
 
 #: app/templates/errors.html:4
 msgid "Error"
-msgstr ""
+msgstr "Error"
 
 #: app/templates/errors.html:6
 msgid "Go Home"
-msgstr ""
+msgstr "Go Home"
 
 #: app/templates/index.html:7
 msgid ""
 "Practice for a thousand days to refine the steel; practice for ten "
 "thousand days to polish the spirit."
 msgstr ""
+"Practice for a thousand days to refine the steel; practice for ten "
+"thousand days to polish the spirit."
 
 #: app/templates/index.html:13
 msgid "NEWS"
-msgstr ""
+msgstr "NEWS"
 
 #: app/templates/index.html:22
 msgid "No news available."
-msgstr ""
+msgstr "No news available."
 
 #: app/templates/index.html:27
 msgid "About Our Club"
-msgstr ""
+msgstr "About Our Club"
 
 #: app/templates/index.html:28
 msgid ""
@@ -207,30 +209,37 @@ msgid ""
 "University. Whether you are aiming for a Yakuman or just want to learn "
 "the basics, you are welcome!"
 msgstr ""
+"We are an unofficial Riichi Mahjong community at the Technical "
+"University. Whether you are aiming for a Yakuman or just want to learn "
+"the basics, you are welcome!"
 
 #: app/templates/index.html:30
 msgid "Why Kokushi Musou?"
-msgstr ""
+msgstr "Why Kokushi Musou?"
 
 #: app/templates/index.html:31
 msgid ""
 "Named after the legendary \"Thirteen Orphans\" hand, we believe in the "
 "beauty of assembling something extraordinary from scattered tiles."
 msgstr ""
+"Named after the legendary \"Thirteen Orphans\" hand, we believe in the "
+"beauty of assembling something extraordinary from scattered tiles."
 
 #: app/templates/index.html:35
 msgid "Meet Us"
-msgstr ""
+msgstr "Meet Us"
 
 #: app/templates/index.html:36
 msgid ""
 "We meet regularly to play and discuss strategies. Reach out to us or "
 "create an account to stay updated!"
 msgstr ""
+"We meet regularly to play and discuss strategies. Reach out to us or "
+"create an account to stay updated!"
 
 #: app/templates/index.html:40
 msgid "UPCOMING EVENTS"
-msgstr ""
+msgstr "UPCOMING EVENTS"
 
 #: app/templates/index.html:50
 msgid "Suzume-Jong Schnupperabend"
@@ -238,15 +247,15 @@ msgstr "Suzume-Jong Taster Session"
 
 #: app/templates/index.html:52
 msgid "Club Event"
-msgstr ""
+msgstr "Club Event"
 
 #: app/templates/index.html:62
 msgid "Uhr"
-msgstr ""
+msgstr "o'clock"
 
 #: app/templates/index.html:66
 msgid "Discord (Online)"
-msgstr ""
+msgstr "Discord (Online)"
 
 #: app/templates/index.html:68
 msgid "TH Köln (Lokal)"
@@ -262,48 +271,48 @@ msgstr "Register via email at mahjong@eato.negitorodon.de"
 
 #: app/templates/user.html:3
 msgid "User:"
-msgstr ""
+msgstr "User:"
 
 #: app/templates/user.html:9
 msgid "Create New Event"
-msgstr ""
+msgstr "Create New Event"
 
 #: app/templates/user.html:10
 msgid "Write New Blog Post"
-msgstr ""
+msgstr "Write New Blog Post"
 
 #: app/templates/user.html:14
 msgid "Your Events"
-msgstr ""
+msgstr "Your Events"
 
 #: app/templates/user.html:19 app/templates/user.html:34
 msgid "Edit"
-msgstr ""
+msgstr "Edit"
 
 #: app/templates/user.html:21 app/templates/user.html:36
 msgid "Are you sure?"
-msgstr ""
+msgstr "Are you sure?"
 
 #: app/templates/user.html:21 app/templates/user.html:36
 msgid "Delete"
-msgstr ""
+msgstr "Delete"
 
 #: app/templates/user.html:27
 msgid "Your Blog Posts"
-msgstr ""
+msgstr "Your Blog Posts"
 
 #: app/templates/user.html:41
 msgid "No blog posts yet."
-msgstr ""
+msgstr "No blog posts yet."
 
 #: app/templates/view_blog.html:6
 msgid "Posted by"
-msgstr ""
+msgstr "Posted by"
 
 #: app/templates/view_blog.html:6
 msgid "on"
-msgstr ""
+msgstr "on"
 
 #: app/templates/view_blog.html:12
 msgid "Back to Blog"
-msgstr ""
+msgstr "Back to Blog"
