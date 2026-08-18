@@ -882,6 +882,7 @@ a:hover {
     }
 
     .main-container {
+        min-width: unset;
         margin: 20px 12px;
         padding: 24px;
     }
