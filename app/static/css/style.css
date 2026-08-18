@@ -595,8 +595,7 @@ a:hover {
     text-align: right;
     display: flex;
     flex-direction: column;
-    align-self: stretch;
-    justify-content: center;
+    gap: 4px;
 }
 
 .event-summary-time {
