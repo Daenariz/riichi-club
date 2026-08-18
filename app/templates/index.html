@@ -1,17 +1,18 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="hero-section">
-    <h1 style="font-size: 3rem; color: #d4af37;">国士無双 - Kokushi Musou</h1>
-    <p style="font-style: italic; font-size: 1.2rem; margin-top: 20px;">
+<div class="hero">
+    <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="Logo" class="hero-logo">
+    <h1>国士無双 - Kokushi Musou</h1>
+    <p>
         "{{ _('Practice for a thousand days to refine the steel; practice for ten thousand days to polish the spirit.') }}"<br>
         <strong>— 宮本 武蔵 (Miyamoto Musashi)</strong>
     </p>
 </div>
 
-<div class="news-container">
-    <h2>{{ _('NEWS') }}</h2>
-    
+<div class="news-section">
+    <h2 class="section-title">{{ _('NEWS') }}</h2>
+
     {% if latest_news %}
     <div class="news-item">
         <h3><a href="{{ url_for('home.view_blog', id=latest_news.id) }}">{{ latest_news.title }}</a></h3>
@@ -23,62 +24,56 @@
     {% endif %}
 </div>
 
-<div id="about" style="padding: 40px 20px;">
+<div class="section">
     <h2>{{ _('About Our Club') }}</h2>
     <p>{{ _('We are an unofficial Riichi Mahjong community at the Technical University. Whether you are aiming for a Yakuman or just want to learn the basics, you are welcome!') }}</p>
-    
+
     <h3>{{ _('Why Kokushi Musou?') }}</h3>
     <p>{{ _('Named after the legendary "Thirteen Orphans" hand, we believe in the beauty of assembling something extraordinary from scattered tiles.') }}</p>
 </div>
 
-<div id="join" style="padding: 40px 20px; border-top: 1px solid #444;">
+<div class="section">
     <h2>{{ _('Meet Us') }}</h2>
     <p>{{ _('We meet regularly to play and discuss strategies. Reach out to us or create an account to stay updated!') }}</p>
 </div>
 
-<div class="events-container" style="max-width: 800px; margin: 40px auto; font-family: 'Arial', sans-serif;">
-    <h2 style="border-bottom: 2px solid #d4af37; padding-bottom: 15px; color: #333; letter-spacing: 1px;">{{ _('UPCOMING EVENTS') }}</h2>
-    
+<div class="events-section">
+    <h2>{{ _('UPCOMING EVENTS') }}</h2>
+
     {% for post in posts %}
-    <details id="event-{{ post.id }}" style="scroll-margin-top: 100px; ...">
-    <summary style="cursor: pointer; display: flex; flex-direction: column; ..." onclick="setTimeout(() => { document.getElementById('event-{{ post.id }}').scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 100);">            
-      <div style="display: flex; flex-direction: column;">
-      <h3 style="margin: 0; color: #d4af37; font-size: 1.5rem;">
-        {% if post.event_type == 'workshop' %}
-          {{ _('Einsteigerworkshop') }}
-        {% elif post.event_type == 'suzume' %}
-          {{ _('Suzume-Jong Schnupperabend') }}
-        {% else %}
-          {{ post.event_type if post.event_type else _('Club Event') }}
-      {% endif %}
-</h3>
-<span style="color: #666; font-size: 0.95rem; margin-top: 5px;">
-                    📅 {{ post.timestamp.strftime('%A, %d. %B %Y') }}
-                </span>
+    <details class="event-details" id="event-{{ post.id }}">
+        <summary>
+            <div class="event-summary-left">
+                <h3>
+                    {% if post.event_type == 'workshop' %}
+                        {{ _('Einsteigerworkshop') }}
+                    {% elif post.event_type == 'suzume' %}
+                        {{ _('Suzume-Jong Schnupperabend') }}
+                    {% else %}
+                        {{ post.event_type if post.event_type else _('Club Event') }}
+                    {% endif %}
+                </h3>
+                <span class="event-summary-date">📅 {{ post.timestamp.strftime('%A, %d. %B %Y') }}</span>
             </div>
 
-            <div style="text-align: right; border-left: 1px solid #ddd; padding-left: 20px;">
-                <span style="display: block; font-weight: bold; font-size: 1.1rem; color: #333;">
-                    {{ post.timestamp.strftime('%H:%M') }} {{ _('Uhr') }}
+            <div class="event-summary-right">
+                <span class="event-summary-time">{{ post.timestamp.strftime('%H:%M') }} {{ _('Uhr') }}</span>
+                <span class="event-summary-location">
+                    {% if post.location_type == 'online' %}
+                        🌐 {{ _('Discord (Online)') }}
+                    {% else %}
+                        📍 {{ _('TH Köln (Lokal)') }}
+                    {% endif %}
                 </span>
-   <div style="font-size: 0.85rem; color: #555;">
-    {% if post.location_type == 'online' %}
-        🌐 {{ _('Discord (Online)') }}
-    {% else %}
-        📍 {{ _('TH Köln (Lokal)') }}
-    {% endif %}
-<!-- </div> -->
             </div>
         </summary>
-        
-        <div style="padding: 0 20px 20px 20px; border-top: 1px solid #f5f5f5; line-height: 1.7; color: #444;">
-            <div style="white-space: pre-line; margin-top: 15px; font-size: 1rem;">
-                {{ post.body }}
-            </div>
-            
-            <div style="margin-top: 25px; background: #fff9e6; padding: 15px; border-radius: 4px; text-align: center; border: 1px solid #ffecb3;">
-                <strong style="color: #333;">{{ _('Interesse?') }}</strong><br>
-                <a href="mailto:mahjong@eato.negitorodon.de" style="color: #d4af37; text-decoration: none; font-weight: bold;">{{ _('Anmeldung per E-Mail an mahjong@eato.negitorodon.de') }}</a>
+
+        <div class="event-body">
+            <div class="description">{{ post.body }}</div>
+
+            <div class="event-cta">
+                <strong>{{ _('Interesse?') }}</strong><br>
+                <a href="mailto:mahjong@eato.negitorodon.de">{{ _('Anmeldung per E-Mail an mahjong@eato.negitorodon.de') }}</a>
             </div>
         </div>
     </details>

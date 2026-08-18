@@ -196,6 +196,25 @@ def delete_blog(id):
     return redirect(url_for("home.user", username=current_user.username))
 
 
+@home_bp.route("/edit_profile/<username>", methods=["GET", "POST"])
+@login_required
+def edit_profile(username):
+    if current_user.username != username:
+        flash(_("You can only edit your own profile."))
+        return redirect(url_for("home.index"))
+    form = EditProfileForm()
+    if form.validate_on_submit():
+        current_user.username = form.username.data
+        current_user.about_me = form.about_me.data
+        db.session.commit()
+        flash(_("Your changes have been saved."))
+        return redirect(url_for("home.user", username=current_user.username))
+    elif request.method == "GET":
+        form.username.data = current_user.username
+        form.about_me.data = current_user.about_me
+    return render_template("edit_profile.html", form=form)
+
+
 @home_bp.route("/edit_blog/<int:id>", methods=["GET", "POST"])
 @login_required
 def edit_blog(id):

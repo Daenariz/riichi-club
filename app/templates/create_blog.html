@@ -1,28 +1,28 @@
 {% extends "base.html" %}
 {% block content %}
-<div style="max-width: 600px; margin: 40px auto; padding: 20px; background: #fff; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
-    <h2 style="color: #d4af37; border-bottom: 2px solid #d4af37; padding-bottom: 10px;">{{ _('Create Blogpost') }}</h2>
-    
-    <form action="" method="post" novalidate style="margin-top: 20px;">
+<div class="card" style="max-width: 600px; margin: 0 auto;">
+    <h2 style="color: #d4af37; border-bottom: 2px solid #d4af37; padding-bottom: 10px; margin: 0 0 20px 0;">{{ _('Create Blogpost') }}</h2>
+
+    <form action="" method="post" novalidate class="form" style="max-width: none;">
         {{ form.hidden_tag() }}
-        
-        <div style="margin-bottom: 20px;">
-            {{ form.title.label(style="font-weight: bold;") }}<br>
-            {{ form.title(size=64, style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;") }}
+
+        <div class="form-group">
+            {{ form.title.label }}
+            {{ form.title(size=64, class="form-input") }}
         </div>
 
-        <div style="margin-bottom: 20px;">
-            {{ form.date.label(style="font-weight: bold;") }}<br>
-            {{ form.date(style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;") }}
+        <div class="form-group">
+            {{ form.date.label }}
+            {{ form.date(class="form-input") }}
         </div>
 
-        <div style="margin-bottom: 20px;">
-            {{ form.body.label(style="font-weight: bold;") }}<br>
-            {{ form.body(cols=50, rows=10, style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;") }}
+        <div class="form-group">
+            {{ form.body.label }}
+            {{ form.body(class="form-textarea") }}
         </div>
 
-        <div style="text-align: center;">
-            {{ form.submit(style="background-color: #d4af37; color: black; padding: 10px 20px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;") }}
+        <div class="form-group" style="text-align: center;">
+            {{ form.submit(class="btn btn-primary") }}
         </div>
     </form>
 </div>

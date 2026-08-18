@@ -8,30 +8,43 @@
 </head>
 <body>
 
-    <nav class="navbar" style="background: rgba(0,0,0,0.8); padding: 10px; color: white;">
-        <span>
-            <a href="{{ url_for('home.index') }}" style="color: white;">{{ _('Home') }}</a>
-            <a href="{{ url_for('home.blog') }}" style="color: white;">{{ _('Blog') }}</a>
+    <nav class="navbar">
+        <a href="{{ url_for('home.index') }}" class="nav-brand">
+            <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="Logo">
+            Kokushi Musou
+        </a>
+
+        <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
+            &#9776;
+        </button>
+
+        <div class="nav-links">
+            <a href="{{ url_for('home.index') }}" class="nav-link">{{ _('Home') }}</a>
+            <a href="{{ url_for('home.blog') }}" class="nav-link">{{ _('Blog') }}</a>
             {% if current_user.is_anonymous %}
-                <a href="{{ url_for('home.login') }}" style="color: white;">{{ _('Login') }}</a>
+                <a href="{{ url_for('home.login') }}" class="nav-link">{{ _('Login') }}</a>
             {% else %}
-                <a href="{{ url_for('home.user', username=current_user.username) }}" style="color: white;">{{ _('Profile') }}</a>
-                <a href="{{ url_for('home.logout') }}" style="color: white;">{{ _('Logout') }}</a>
+                <a href="{{ url_for('home.user', username=current_user.username) }}" class="nav-link">{{ _('Profile') }}</a>
+                <a href="{{ url_for('home.logout') }}" class="nav-link">{{ _('Logout') }}</a>
             {% endif %}
-        </span>
-        <span style="float: right;">
-            <a href="{{ url_for('home.set_language', lang='de') }}" style="color: white;">DE</a> |
-            <a href="{{ url_for('home.set_language', lang='en') }}" style="color: white;">EN</a>
-        </span>
+
+            <span class="nav-separator">|</span>
+
+            <span class="nav-lang">
+                <a href="{{ url_for('home.set_language', lang='de') }}" class="nav-link">{{ _('DE') }}</a>
+                <span class="nav-separator">|</span>
+                <a href="{{ url_for('home.set_language', lang='en') }}" class="nav-link">{{ _('EN') }}</a>
+            </span>
+        </div>
     </nav>
 
     <div class="main-container">
-        
+
         {% with messages = get_flashed_messages() %}
             {% if messages %}
-                <ul style="color: #d4af37;">
+                <ul class="flash-container">
                 {% for message in messages %}
-                    <li>{{ message }}</li>
+                    <li class="flash flash-info">{{ message }}</li>
                 {% endfor %}
                 </ul>
             {% endif %}
@@ -39,6 +52,19 @@
 
         {% block content %}{% endblock %}
     </div>
+
+    <footer class="footer">
+        <div class="footer-brand">
+            <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="Logo">
+            Kokushi Musou
+        </div>
+        <div class="footer-links">
+            <a href="{{ url_for('home.index') }}">{{ _('Home') }}</a>
+            <a href="{{ url_for('home.blog') }}">{{ _('Blog') }}</a>
+            <a href="mailto:mahjong@eato.negitorodon.de">{{ _('Contact') }}</a>
+        </div>
+        <p>&copy; 2025 Kokushi Musou Riichi Club</p>
+    </footer>
 
 </body>
 </html>
