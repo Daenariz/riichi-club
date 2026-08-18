@@ -1,40 +1,62 @@
 {% extends "base.html" %}
 {% block content %}
-    <h1>{{ _('User:') }} {{ user.username }}</h1>
-    {% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}
-    <hr>
-    
+    <div class="profile-header">
+        <h1>{{ _('User:') }} {{ user.username }}</h1>
+        {% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}
+    </div>
+
     {% if user == current_user %}
-        <p>
-            <a href="{{ url_for('home.create_event') }}">{{ _('Create New Event') }}</a> | 
-            <a href="{{ url_for('home.create_blog') }}">{{ _('Write New Blog Post') }}</a>
-        </p>
+        <div class="profile-actions">
+            <a href="{{ url_for('home.create_event') }}" class="btn btn-primary btn-sm">{{ _('Create New Event') }}</a>
+            <a href="{{ url_for('home.create_blog') }}" class="btn btn-primary btn-sm">{{ _('Write New Blog Post') }}</a>
+            <a href="{{ url_for('home.edit_profile', username=current_user.username) }}" class="btn btn-link btn-sm">{{ _('Edit Profile') }}</a>
+        </div>
     {% endif %}
 
-    <h2>{{ _('Your Events') }}</h2>
+    <h2 style="border-bottom: 2px solid #d4af37; padding-bottom: 8px;">{{ _('Your Events') }}</h2>
     {% for post in posts %}
-        <div style="border-bottom: 1px solid #ccc; margin-bottom: 10px; padding-bottom: 10px;">
-            <p><strong>{{ post.timestamp.strftime('%d.%m.%Y %H:%M') }}</strong>: {{ post.body }}</p>
+        <div class="card">
+            <div class="card-header">
+                <div>
+                    <strong>{{ post.timestamp.strftime('%d.%m.%Y %H:%M') }}</strong>
+                </div>
+                <span class="card-meta">
+                    {% if post.event_type == 'workshop' %}
+                        {{ _('Einsteigerworkshop') }}
+                    {% elif post.event_type == 'suzume' %}
+                        {{ _('Suzume Jong') }}
+                    {% else %}
+                        {{ post.event_type }}
+                    {% endif %}
+                </span>
+            </div>
+            <div class="card-body">{{ post.body }}</div>
             {% if user == current_user %}
-                <a href="{{ url_for('home.edit_event', id=post.id) }}">{{ _('Edit') }}</a> |
-                <form action="{{ url_for('home.delete_event', id=post.id) }}" method="post" style="display:inline;">
-                    <button type="submit" onclick="return confirm('{{ _('Are you sure?') }}')">{{ _('Delete') }}</button>
-                </form>
+                <div class="card-actions">
+                    <a href="{{ url_for('home.edit_event', id=post.id) }}" class="btn btn-link btn-sm">{{ _('Edit') }}</a>
+                    <form action="{{ url_for('home.delete_event', id=post.id) }}" method="post" class="form-inline">
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('{{ _('Are you sure?') }}')">{{ _('Delete') }}</button>
+                    </form>
+                </div>
             {% endif %}
         </div>
     {% endfor %}
 
-    <h2>{{ _('Your Blog Posts') }}</h2>
+    <h2 style="border-bottom: 2px solid #d4af37; padding-bottom: 8px; margin-top: 32px;">{{ _('Your Blog Posts') }}</h2>
     {% for post in blog_posts %}
-        <div style="border-bottom: 1px solid #ccc; margin-bottom: 10px; padding-bottom: 10px;">
-            <h3>{{ post.title }}</h3>
-            <p><small>{{ post.timestamp.strftime('%d.%m.%Y') }}</small></p>
-            <p>{{ post.body }}</p>
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title" style="margin: 0;"><a href="{{ url_for('home.view_blog', id=post.id) }}">{{ post.title }}</a></h3>
+                <span class="card-meta">{{ post.timestamp.strftime('%d.%m.%Y') }}</span>
+            </div>
+            <div class="card-body">{{ post.body }}</div>
             {% if user == current_user %}
-               <a href="{{ url_for('home.edit_blog', id=post.id) }}">{{ _('Edit') }}</a> |
-               <form action="{{ url_for('home.delete_blog', id=post.id) }}" method="post" style="display:inline;">
-                    <button type="submit" onclick="return confirm('{{ _('Are you sure?') }}')">{{ _('Delete') }}</button>
-                </form>
+                <div class="card-actions">
+                    <a href="{{ url_for('home.edit_blog', id=post.id) }}" class="btn btn-link btn-sm">{{ _('Edit') }}</a>
+                    <form action="{{ url_for('home.delete_blog', id=post.id) }}" method="post" class="form-inline">
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('{{ _('Are you sure?') }}')">{{ _('Delete') }}</button>
+                    </form>
+                </div>
             {% endif %}
         </div>
     {% else %}

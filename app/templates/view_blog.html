@@ -2,12 +2,12 @@
 
 {% block content %}
     <article>
-        <h1>{{ post.title }}</h1>
-        <p><small>{{ _('Posted by') }} {{ post.author.username }} {{ _('on') }} {{ post.timestamp.strftime('%Y-%m-%d') }}</small></p>
-        <div>
+        <h1 style="color: #d4af37; margin-bottom: 4px;">{{ post.title }}</h1>
+        <p class="card-meta" style="margin-bottom: 24px;">{{ _('Posted by') }} {{ post.author.username }} {{ _('on') }} {{ post.timestamp.strftime('%Y-%m-%d') }}</p>
+        <div style="line-height: 1.8; white-space: pre-line;">
             {{ post.body | safe }}
         </div>
     </article>
-    <hr>
-    <a href="{{ url_for('home.blog') }}">{{ _('Back to Blog') }}</a>
+    <hr style="border-color: var(--border); margin: 32px 0;">
+    <a href="{{ url_for('home.blog') }}" class="btn btn-link">&larr; {{ _('Back to Blog') }}</a>
 {% endblock %}
