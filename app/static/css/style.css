@@ -43,6 +43,8 @@
 body {
     margin: 0;
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
     background: url('../images/mahjtable.jpg') center/cover fixed no-repeat;
     font-family: 'Segoe UI', Arial, sans-serif;
     color: var(--text);
@@ -159,6 +161,7 @@ a:hover {
    ============================================================ */
 .main-container {
     background: var(--bg-overlay);
+    flex: 1;
     max-width: 900px;
     margin: 40px auto;
     padding: 40px;

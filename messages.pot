@@ -260,7 +260,7 @@ msgid "Interesse?"
 msgstr ""
 
 #: app/templates/index.html:81
-msgid "Anmeldung per E-Mail an mahjong@eato.negitorodon.de"
+msgid "Anmeldung per E-Mail an kontakt@kokushi-musou.de"
 msgstr ""
 
 #: app/templates/user.html:3
