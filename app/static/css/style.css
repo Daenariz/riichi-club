@@ -164,6 +164,7 @@ a:hover {
 .main-container {
     background: var(--bg-overlay);
     flex: 1;
+    min-width: 600px;
     max-width: 900px;
     margin: 40px auto;
     padding: 40px;
@@ -596,8 +597,6 @@ a:hover {
     flex-direction: column;
     align-self: stretch;
     justify-content: center;
-    border-left: 1px solid var(--border);
-    padding-left: 20px;
 }
 
 .event-summary-time {
