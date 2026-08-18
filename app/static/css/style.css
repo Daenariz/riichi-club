@@ -95,6 +95,8 @@ a:hover {
 .nav-brand img {
     height: 40px;
     width: 40px;
+    border-radius: 50%;
+    border: 2px solid var(--gold);
 }
 
 .nav-links {
@@ -205,6 +207,8 @@ a:hover {
 .footer-brand img {
     height: 24px;
     width: 24px;
+    border-radius: 50%;
+    border: 1.5px solid var(--gold);
 }
 
 /* ============================================================
@@ -223,6 +227,8 @@ a:hover {
     height: 320px;
     width: 320px;
     margin-bottom: 16px;
+    border-radius: 50%;
+    border: 4px solid var(--gold);
     filter: drop-shadow(0 2px 8px rgba(212, 175, 55, 0.4));
 }
 
@@ -405,8 +411,16 @@ a:hover {
     background: rgba(212, 175, 55, 0.08);
 }
 
+.form-checkbox {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--gold);
+    cursor: pointer;
+    margin: 0;
+}
+
 /* ============================================================
-   TOGGLE SWITCH
+   TOGGLE SWITCH (unused, kept for reference)
    ============================================================ */
 .toggle {
     display: inline-flex;
@@ -580,6 +594,8 @@ a:hover {
     text-align: right;
     display: flex;
     flex-direction: column;
+    align-self: stretch;
+    justify-content: center;
     border-left: 1px solid var(--border);
     padding-left: 20px;
 }
