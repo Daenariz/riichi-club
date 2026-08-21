@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{ tournament.title }}</h1>
+<p class="card-meta">{{ _('Max Players') }}: {{ tournament.max_players }}</p>
+
+<h2>{{ _('Teilnehmerliste') }}</h2>
+
+{% if main_list %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>{{ _('Ingame Name') }}</th>
+            <th>{{ _('Club') }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for reg in main_list %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ reg.ingame_name }}</td>
+            <td>{{ reg.club_name or '—' }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>{{ _('Noch keine bestätigten Teilnehmer.') }}</p>
+{% endif %}
+
+{% if wait_list %}
+<h2>{{ _('Warteliste') }}</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>{{ _('Ingame Name') }}</th>
+            <th>{{ _('Club') }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for reg in wait_list %}
+        <tr class="table-row-muted">
+            <td>{{ loop.index }}</td>
+            <td>{{ reg.ingame_name }}</td>
+            <td>{{ reg.club_name or '—' }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+
+<div class="card-actions">
+    <a href="{{ url_for('home.tournament_detail', id=tournament.id) }}" class="btn btn-link">{{ _('Zurück zum Turnier') }}</a>
+</div>
+{% endblock %}
