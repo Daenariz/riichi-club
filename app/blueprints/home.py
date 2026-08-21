@@ -9,16 +9,35 @@ from flask import (
     current_app,
     abort,
 )
-from app.forms import LoginForm, EditProfileForm, EventForm, BlogForm
+from app.forms import (
+    LoginForm,
+    EditProfileForm,
+    EventForm,
+    BlogForm,
+    TournamentRegistrationForm,
+    TournamentForm,
+)
 from flask_login import login_user, current_user, logout_user, login_required
 import sqlalchemy as sa
 from app import db
-from app.models import User, Post, BlogPost
+from app.models import User, Post, BlogPost, Tournament, Registration
 from flask_babel import _
 from urllib.parse import urlsplit
 from datetime import datetime, timezone
+from functools import wraps
 
 home_bp = Blueprint("home", __name__)
+
+
+def admin_required(f):
+    @wraps(f)
+    @login_required
+    def decorated_function(*args, **kwargs):
+        if not current_user.is_admin:
+            abort(403)
+        return f(*args, **kwargs)
+
+    return decorated_function
 
 
 @home_bp.before_request
@@ -30,7 +49,6 @@ def before_request():
 
 @home_bp.route("/")
 @home_bp.route("/index")
-# @login_required
 def index():
     query = sa.select(Post).order_by(Post.timestamp.desc())
     posts = db.session.scalars(query).all()
@@ -97,7 +115,7 @@ def create_event():
             author=current_user,
             timestamp=combined_dt,
             event_type=form.event_type.data,
-            location_type=form.location_type.data,  # Diese Zeile hinzufügen!
+            location_type=form.location_type.data,
         )
         db.session.add(post)
         db.session.commit()
@@ -120,10 +138,7 @@ def edit_event(id):
         return redirect(url_for("home.user", username=current_user.username))
 
     elif request.method == "GET":
-        # WICHTIG: Hier werden die alten Daten ins Formular geladen
-        form.event_type.data = (
-            post.event_type
-        )  # Setzt das Dropdown auf den gespeicherten Wert
+        form.event_type.data = post.event_type
         form.description.data = post.body
         form.date.data = post.timestamp.date()
         form.time.data = post.timestamp.time()
@@ -219,7 +234,7 @@ def edit_profile(username):
 @login_required
 def edit_blog(id):
     blog_post = db.session.get(BlogPost, id)
-    form = BlogForm()  # Erst mal ein leeres Formular
+    form = BlogForm()
 
     if form.validate_on_submit():
         blog_post.title = form.title.data
@@ -233,3 +248,231 @@ def edit_blog(id):
         form.body.data = blog_post.body
 
     return render_template("edit_blog.html", form=form, title="Edit Blog")
+
+
+# --- Tournament Routes (Public) ---
+
+
+@home_bp.route("/turnier")
+def tournament_list():
+    active = db.session.scalar(
+        sa.select(Tournament).where(Tournament.is_active == True).limit(1)
+    )
+    if active:
+        return redirect(url_for("home.tournament_detail", id=active.id))
+    return render_template("tournament.html", tournament=None)
+
+
+@home_bp.route("/turnier/<int:id>")
+def tournament_detail(id):
+    tournament = db.session.get(Tournament, id)
+    if tournament is None:
+        abort(404)
+    form = TournamentRegistrationForm()
+
+    registrations = db.session.scalars(
+        sa.select(Registration)
+        .where(
+            Registration.tournament_id == id,
+            Registration.is_confirmed == True,
+        )
+        .order_by(Registration.created_at.asc())
+    ).all()
+
+    main_list = registrations[: tournament.max_players]
+    wait_list = registrations[tournament.max_players :]
+
+    return render_template(
+        "tournament.html",
+        tournament=tournament,
+        form=form,
+        main_list=main_list,
+        wait_list=wait_list,
+    )
+
+
+@home_bp.route("/turnier/<int:id>/anmelden", methods=["POST"])
+def tournament_register(id):
+    tournament = db.session.get(Tournament, id)
+    if tournament is None:
+        abort(404)
+    form = TournamentRegistrationForm()
+    if form.validate_on_submit():
+        existing = db.session.scalar(
+            sa.select(Registration).where(
+                Registration.tournament_id == id,
+                Registration.email == form.email.data,
+            )
+        )
+        if existing:
+            flash(_("You are already registered for this tournament."))
+            return redirect(url_for("home.tournament_detail", id=id))
+
+        reg = Registration(
+            tournament_id=id,
+            ingame_name=form.ingame_name.data,
+            club_name=form.club_name.data or None,
+            email=form.email.data,
+        )
+        db.session.add(reg)
+        db.session.commit()
+        return redirect(url_for("home.tournament_thanks", id=id))
+    for field, errors in form.errors.items():
+        for error in errors:
+            flash(f"{getattr(form, field).label.text}: {error}")
+    return redirect(url_for("home.tournament_detail", id=id))
+
+
+@home_bp.route("/turnier/<int:id>/anmelden/danke")
+def tournament_thanks(id):
+    tournament = db.session.get(Tournament, id)
+    if tournament is None:
+        abort(404)
+    return render_template("tournament_thanks.html", tournament=tournament)
+
+
+@home_bp.route("/turnier/<int:id>/teilnehmer")
+def tournament_participants(id):
+    tournament = db.session.get(Tournament, id)
+    if tournament is None:
+        abort(404)
+
+    registrations = db.session.scalars(
+        sa.select(Registration)
+        .where(
+            Registration.tournament_id == id,
+            Registration.is_confirmed == True,
+        )
+        .order_by(Registration.created_at.asc())
+    ).all()
+
+    main_list = registrations[: tournament.max_players]
+    wait_list = registrations[tournament.max_players :]
+
+    return render_template(
+        "participants.html",
+        tournament=tournament,
+        main_list=main_list,
+        wait_list=wait_list,
+    )
+
+
+# --- Admin Routes ---
+
+
+@home_bp.route("/admin")
+@admin_required
+def admin():
+    tournaments = db.session.scalars(
+        sa.select(Tournament).order_by(Tournament.created_at.desc())
+    ).all()
+    return render_template("admin.html", tournaments=tournaments)
+
+
+@home_bp.route("/admin/turnier/neu", methods=["GET", "POST"])
+@admin_required
+def admin_tournament_create():
+    form = TournamentForm()
+    if form.validate_on_submit():
+        tournament = Tournament(
+            title=form.title.data,
+            description=form.description.data,
+            max_players=form.max_players.data,
+            is_active=form.is_active.data,
+        )
+        db.session.add(tournament)
+        db.session.commit()
+        flash(_("Tournament created."))
+        return redirect(url_for("home.admin"))
+    return render_template(
+        "admin_tournament_form.html", form=form, title=_("Create Tournament")
+    )
+
+
+@home_bp.route("/admin/turnier/<int:id>", methods=["GET", "POST"])
+@admin_required
+def admin_tournament_edit(id):
+    tournament = db.session.get(Tournament, id)
+    if tournament is None:
+        abort(404)
+    form = TournamentForm()
+    if form.validate_on_submit():
+        tournament.title = form.title.data
+        tournament.description = form.description.data
+        tournament.max_players = form.max_players.data
+        tournament.is_active = form.is_active.data
+        db.session.commit()
+        flash(_("Tournament updated."))
+        return redirect(url_for("home.admin"))
+    elif request.method == "GET":
+        form.title.data = tournament.title
+        form.description.data = tournament.description
+        form.max_players.data = tournament.max_players
+        form.is_active.data = tournament.is_active
+    return render_template(
+        "admin_tournament_form.html",
+        form=form,
+        title=_("Edit Tournament"),
+        tournament=tournament,
+    )
+
+
+@home_bp.route("/admin/turnier/<int:id>/loeschen", methods=["POST"])
+@admin_required
+def admin_tournament_delete(id):
+    tournament = db.session.get(Tournament, id)
+    if tournament is None:
+        abort(404)
+    db.session.execute(sa.delete(Registration).where(Registration.tournament_id == id))
+    db.session.delete(tournament)
+    db.session.commit()
+    flash(_("Tournament deleted."))
+    return redirect(url_for("home.admin"))
+
+
+@home_bp.route("/admin/turnier/<int:id>/anmeldungen")
+@admin_required
+def admin_registrations(id):
+    tournament = db.session.get(Tournament, id)
+    if tournament is None:
+        abort(404)
+
+    registrations = db.session.scalars(
+        sa.select(Registration)
+        .where(Registration.tournament_id == id)
+        .order_by(Registration.created_at.asc())
+    ).all()
+
+    return render_template(
+        "admin_registrations.html",
+        tournament=tournament,
+        registrations=registrations,
+    )
+
+
+@home_bp.route("/admin/anmeldung/<int:id>/confirm", methods=["POST"])
+@admin_required
+def admin_registration_confirm(id):
+    reg = db.session.get(Registration, id)
+    if reg is None:
+        abort(404)
+    reg.is_confirmed = not reg.is_confirmed
+    db.session.commit()
+    status = _("confirmed") if reg.is_confirmed else _("pending")
+    flash(_("Registration status changed to %(status)s.", status=status))
+    return redirect(
+        url_for("home.admin_registrations", id=reg.tournament_id)
+    )
+
+
+@home_bp.route("/admin/anmeldung/<int:id>/loeschen", methods=["POST"])
+@admin_required
+def admin_registration_delete(id):
+    reg = db.session.get(Registration, id)
+    if reg is None:
+        abort(404)
+    tid = reg.tournament_id
+    db.session.delete(reg)
+    db.session.commit()
+    flash(_("Registration deleted."))
+    return redirect(url_for("home.admin_registrations", id=tid))
