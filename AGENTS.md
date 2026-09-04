@@ -6,3 +6,4 @@
 - Änderungen über PR nach `develop` mergen
 - Wenn Fetch/Pull nicht möglich → Bescheid sagen, nicht forcieren
 - Nach Abschluss der Arbeit: alle Änderungen committen **und** pushen
+- Vor jedem Push: `nix fmt` ausführen

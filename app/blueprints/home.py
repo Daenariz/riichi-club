@@ -460,9 +460,7 @@ def admin_registration_confirm(id):
     db.session.commit()
     status = _("confirmed") if reg.is_confirmed else _("pending")
     flash(_("Registration status changed to %(status)s.", status=status))
-    return redirect(
-        url_for("home.admin_registrations", id=reg.tournament_id)
-    )
+    return redirect(url_for("home.admin_registrations", id=reg.tournament_id))
 
 
 @home_bp.route("/admin/anmeldung/<int:id>/loeschen", methods=["POST"])

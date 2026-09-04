@@ -19,9 +19,7 @@ class TournamentForm(FlaskForm):
         _l("Title"),
         validators=[DataRequired(_l("This field is required.")), Length(max=140)],
     )
-    description = TextAreaField(
-        _l("Description"), validators=[Length(max=2000)]
-    )
+    description = TextAreaField(_l("Description"), validators=[Length(max=2000)])
     max_players = IntegerField(
         _l("Max Players"),
         validators=[DataRequired(_l("This field is required.")), NumberRange(min=2)],
