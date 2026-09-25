@@ -9,10 +9,47 @@ from app import login
 from hashlib import md5
 
 
+class Tournament(db.Model):
+    id: so.Mapped[int] = so.mapped_column(primary_key=True)
+    title: so.Mapped[str] = so.mapped_column(sa.String(140))
+    description: so.Mapped[Optional[str]] = so.mapped_column(sa.String(2000))
+    max_players: so.Mapped[int] = so.mapped_column(default=8)
+    is_active: so.Mapped[bool] = so.mapped_column(default=True)
+    created_at: so.Mapped[datetime] = so.mapped_column(
+        default=lambda: datetime.now(timezone.utc)
+    )
+
+    registrations: so.WriteOnlyMapped["Registration"] = so.relationship(
+        back_populates="tournament", passive_deletes=True
+    )
+
+    def __repr__(self):
+        return f"<Tournament {self.title}>"
+
+
+class Registration(db.Model):
+    id: so.Mapped[int] = so.mapped_column(primary_key=True)
+    tournament_id: so.Mapped[int] = so.mapped_column(
+        sa.ForeignKey("tournament.id"), index=True
+    )
+    ingame_name: so.Mapped[str] = so.mapped_column(sa.String(64))
+    club_name: so.Mapped[Optional[str]] = so.mapped_column(sa.String(100))
+    email: so.Mapped[str] = so.mapped_column(sa.String(120))
+    is_confirmed: so.Mapped[bool] = so.mapped_column(default=False)
+    created_at: so.Mapped[datetime] = so.mapped_column(
+        default=lambda: datetime.now(timezone.utc)
+    )
+
+    tournament: so.Mapped[Tournament] = so.relationship(back_populates="registrations")
+
+    def __repr__(self):
+        return f"<Registration {self.ingame_name}>"
+
+
 class Event(db.Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
     title: so.Mapped[str] = so.mapped_column(sa.String(100))
-    location: so.Mapped[str] = so.mapped_column(sa.String(100))  # Raum an der TU
+    location: so.Mapped[str] = so.mapped_column(sa.String(100))
     event_time: so.Mapped[datetime] = so.mapped_column(
         default=lambda: datetime.now(timezone.utc)
     )
@@ -35,6 +72,7 @@ class User(UserMixin, db.Model):
     last_seen: so.Mapped[Optional[datetime]] = so.mapped_column(
         default=lambda: datetime.now(timezone.utc)
     )
+    is_admin: so.Mapped[bool] = so.mapped_column(default=False)
 
     def __repr__(self):
         return "<User {}>".format(self.username)
@@ -52,7 +90,7 @@ class User(UserMixin, db.Model):
 
 class Post(db.Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
-    body: so.Mapped[str] = so.mapped_column(sa.String(2000))  # Viel Platz für Texte
+    body: so.Mapped[str] = so.mapped_column(sa.String(2000))
     timestamp: so.Mapped[datetime] = so.mapped_column(
         index=True, default=lambda: datetime.now(timezone.utc)
     )

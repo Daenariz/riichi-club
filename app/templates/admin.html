@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{ _('Admin') }}</h1>
+
+<div class="profile-actions">
+    <a href="{{ url_for('home.admin_tournament_create') }}" class="btn btn-primary">{{ _('Neues Turnier') }}</a>
+</div>
+
+<h2>{{ _('Turniere') }}</h2>
+
+{% if tournaments %}
+{% for t in tournaments %}
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">{{ t.title }}</h3>
+        <span class="badge {% if t.is_active %}badge-confirmed{% else %}badge-pending{% endif %}">
+            {{ _('Aktiv') if t.is_active else _('Inaktiv') }}
+        </span>
+    </div>
+    <p class="card-meta">
+        {{ _('Max Players') }}: {{ t.max_players }}
+        &middot; {{ t.created_at.strftime('%d.%m.%Y') }}
+    </p>
+    <div class="card-actions">
+        <a href="{{ url_for('home.admin_registrations', id=t.id) }}" class="btn btn-sm btn-primary">{{ _('Anmeldungen') }}</a>
+        <a href="{{ url_for('home.admin_tournament_edit', id=t.id) }}" class="btn btn-sm btn-link">{{ _('Bearbeiten') }}</a>
+        <form action="{{ url_for('home.admin_tournament_delete', id=t.id) }}" method="post" class="form-inline" onsubmit="return confirm('{{ _('Turnier wirklich löschen?') }}');">
+            <button type="submit" class="btn btn-sm btn-danger">{{ _('Löschen') }}</button>
+        </form>
+    </div>
+</div>
+{% endfor %}
+{% else %}
+<p>{{ _('Keine Turniere vorhanden.') }}</p>
+{% endif %}
+{% endblock %}

@@ -16,6 +16,7 @@ python3.pkgs.buildPythonApplication rec {
     flask-sqlalchemy
     flask-migrate
     flask-login
+    flask-babel
   ];
 
   checkInputs = with python3.pkgs; [
@@ -30,6 +31,7 @@ python3.pkgs.buildPythonApplication rec {
     mkdir -p $out
     cp -r $src/app $out/
     cp -r $src/migrations $out/
+    cp -r $src/translations $out/
     cp $src/run.py $out/
     cp $src/config.py $out/
 

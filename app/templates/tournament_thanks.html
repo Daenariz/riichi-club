@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card" style="text-align: center;">
+    <h1>{{ _('Vielen Dank für deine Anmeldung!') }}</h1>
+    <div class="card-body">
+        <p>{{ _('Deine Anmeldung für "%(title)s" wurde erfolgreich eingereicht.', title=tournament.title) }}</p>
+        <p>{{ _('Deine Anmeldung wird in Kürze von uns geprüft. Du erhältst dann eine Bestätigung.') }}</p>
+    </div>
+    <div class="card-actions" style="justify-content: center;">
+        <a href="{{ url_for('home.tournament_detail', id=tournament.id) }}" class="btn btn-primary">{{ _('Zurück zum Turnier') }}</a>
+        <a href="{{ url_for('home.index') }}" class="btn btn-link">{{ _('Zur Startseite') }}</a>
+    </div>
+</div>
+{% endblock %}
