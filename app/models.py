@@ -112,6 +112,12 @@ class BlogPost(db.Model):
     author: so.Mapped["User"] = so.relationship(back_populates="blog_posts")
 
 
+class SiteContent(db.Model):
+    key: so.Mapped[str] = so.mapped_column(sa.String(50), primary_key=True)
+    lang: so.Mapped[str] = so.mapped_column(sa.String(5), primary_key=True)
+    value: so.Mapped[str] = so.mapped_column(sa.String(2000))
+
+
 @login.user_loader
 def load_user(id):
     return db.session.get(User, int(id))

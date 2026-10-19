@@ -29,6 +29,17 @@ def inject_locale():
     return dict(get_locale=get_locale)
 
 
+@app.context_processor
+def inject_site_content():
+    from .models import SiteContent
+
+    def content(key, default=""):
+        entry = db.session.get(SiteContent, (key, get_locale()))
+        return entry.value if entry else default
+
+    return dict(site_content=content)
+
+
 #    from app import routes ### statt routes.py haben wir __init__.py
 ##   from flask_hello import models
 

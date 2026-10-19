@@ -113,3 +113,27 @@ class BlogForm(FlaskForm):
         validators=[DataRequired(_l("This field is required."))],
     )
     submit = SubmitField(_l("Post"))
+
+
+class SiteContentForm(FlaskForm):
+    hero_title = StringField(
+        _l("Hero Title"),
+        validators=[DataRequired(), Length(max=140)],
+    )
+    hero_quote = TextAreaField(
+        _l("Hero Quote"),
+        validators=[DataRequired(), Length(max=500)],
+    )
+    about_text = TextAreaField(
+        _l("About Our Club"),
+        validators=[DataRequired(), Length(max=2000)],
+    )
+    why_name_text = TextAreaField(
+        _l("Why Kokushi Musou?"),
+        validators=[DataRequired(), Length(max=2000)],
+    )
+    meet_us_text = TextAreaField(
+        _l("Meet Us"),
+        validators=[DataRequired(), Length(max=2000)],
+    )
+    submit = SubmitField(_l("Save"))

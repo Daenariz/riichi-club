@@ -16,11 +16,12 @@ from app.forms import (
     BlogForm,
     TournamentRegistrationForm,
     TournamentForm,
+    SiteContentForm,
 )
 from flask_login import login_user, current_user, logout_user, login_required
 import sqlalchemy as sa
 from app import db
-from app.models import User, Post, BlogPost, Tournament, Registration
+from app.models import User, Post, BlogPost, Tournament, Registration, SiteContent
 from flask_babel import _
 from urllib.parse import urlsplit
 from datetime import datetime, timezone
@@ -474,3 +475,41 @@ def admin_registration_delete(id):
     db.session.commit()
     flash(_("Registration deleted."))
     return redirect(url_for("home.admin_registrations", id=tid))
+
+
+@home_bp.route("/admin/content", methods=["GET", "POST"])
+@admin_required
+def admin_content():
+    lang = session.get("lang", current_app.config["LANGUAGES"][0])
+    form = SiteContentForm()
+    if form.validate_on_submit():
+        fields = [
+            ("hero_title", form.hero_title.data),
+            ("hero_quote", form.hero_quote.data),
+            ("about_text", form.about_text.data),
+            ("why_name_text", form.why_name_text.data),
+            ("meet_us_text", form.meet_us_text.data),
+        ]
+        for key, value in fields:
+            entry = db.session.get(SiteContent, (key, lang))
+            if entry:
+                entry.value = value
+            else:
+                db.session.add(SiteContent(key=key, lang=lang, value=value))
+        db.session.commit()
+        flash(_("Homepage content saved for language %(lang)s.", lang=lang))
+        return redirect(url_for("home.admin_content"))
+    elif request.method == "GET":
+        for key, field in [
+            ("hero_title", form.hero_title),
+            ("hero_quote", form.hero_quote),
+            ("about_text", form.about_text),
+            ("why_name_text", form.why_name_text),
+            ("meet_us_text", form.meet_us_text),
+        ]:
+            entry = db.session.get(SiteContent, (key, lang))
+            if entry:
+                field.data = entry.value
+    return render_template(
+        "admin_content.html", form=form, title=_("Edit Homepage"), lang=lang
+    )

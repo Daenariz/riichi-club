@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{ _('Edit Homepage') }}</h1>
+
+<p class="text-muted">
+    {{ _('Editing content for language: %(lang)s', lang=lang) }}
+</p>
+
+<form method="post" novalidate class="form">
+    {{ form.hidden_tag() }}
+
+    <div class="form-group">
+        {{ form.hero_title.label }}
+        {{ form.hero_title(size=60, class="form-input") }}
+        {% for error in form.hero_title.errors %}
+        <div class="form-error">{{ error }}</div>
+        {% endfor %}
+    </div>
+
+    <div class="form-group">
+        {{ form.hero_quote.label }}
+        {{ form.hero_quote(class="form-textarea") }}
+        {% for error in form.hero_quote.errors %}
+        <div class="form-error">{{ error }}</div>
+        {% endfor %}
+    </div>
+
+    <div class="form-group">
+        {{ form.about_text.label }}
+        {{ form.about_text(class="form-textarea") }}
+        {% for error in form.about_text.errors %}
+        <div class="form-error">{{ error }}</div>
+        {% endfor %}
+    </div>
+
+    <div class="form-group">
+        {{ form.why_name_text.label }}
+        {{ form.why_name_text(class="form-textarea") }}
+        {% for error in form.why_name_text.errors %}
+        <div class="form-error">{{ error }}</div>
+        {% endfor %}
+    </div>
+
+    <div class="form-group">
+        {{ form.meet_us_text.label }}
+        {{ form.meet_us_text(class="form-textarea") }}
+        {% for error in form.meet_us_text.errors %}
+        <div class="form-error">{{ error }}</div>
+        {% endfor %}
+    </div>
+
+    <div class="form-group">
+        {{ form.submit(class="btn btn-primary") }}
+        <a href="{{ url_for('home.admin') }}" class="btn btn-link">{{ _('Cancel') }}</a>
+    </div>
+</form>
+{% endblock %}
