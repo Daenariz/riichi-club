@@ -46,9 +46,9 @@
             <div class="event-summary-left">
                 <h3>
                     {% if post.event_type == 'workshop' %}
-                        {{ _('Einsteigerworkshop') }}
+                        {{ _('Beginner Workshop') }}
                     {% elif post.event_type == 'suzume' %}
-                        {{ _('Suzume-Jong Schnupperabend') }}
+                        {{ _('Suzume-Jong Taster Session') }}
                     {% else %}
                         {{ post.event_type if post.event_type else _('Club Event') }}
                     {% endif %}
@@ -57,12 +57,12 @@
             </div>
 
             <div class="event-summary-right">
-                <span class="event-summary-time">{{ post.timestamp.strftime('%H:%M') }} {{ _('Uhr') }}</span>
+                <span class="event-summary-time">{{ post.timestamp.strftime('%H:%M') }} {{ _('o\'clock') }}</span>
                 <span class="event-summary-location">
                     {% if post.location_type == 'online' %}
                         🌐 {{ _('Discord (Online)') }}
                     {% else %}
-                        📍 {{ _('TH Köln (Lokal)') }}
+                        📍 {{ _('TH Köln (On-site)') }}
                     {% endif %}
                 </span>
             </div>
@@ -72,8 +72,8 @@
             <div class="description">{{ post.body }}</div>
 
             <div class="event-cta">
-                <strong>{{ _('Interesse?') }}</strong><br>
-                <a href="mailto:kontakt@kokushi-musou.de">{{ _('Anmeldung per E-Mail an kontakt@kokushi-musou.de') }}</a>
+                <strong>{{ _('Interested?') }}</strong><br>
+                <a href="mailto:kontakt@kokushi-musou.de">{{ _('Register via email at kontakt@kokushi-musou.de') }}</a>
             </div>
         </div>
     </details>

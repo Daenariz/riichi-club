@@ -23,11 +23,11 @@ msgid "Event Type"
 msgstr "Event Type"
 
 #: app/forms.py:20 app/templates/index.html:48
-msgid "Einsteigerworkshop"
+msgid "Beginner Workshop"
 msgstr "Beginner Workshop"
 
 #: app/forms.py:21
-msgid "Suzume Jong - Mahjong Schnupperabend"
+msgid "Suzume Jong - Mahjong Taster Session"
 msgstr "Suzume Jong - Mahjong Taster Session"
 
 #: app/forms.py:25
@@ -39,7 +39,7 @@ msgid "Online"
 msgstr "Online"
 
 #: app/forms.py:26
-msgid "Lokal"
+msgid "On-site"
 msgstr "On-site"
 
 #: app/forms.py:29 app/forms.py:77
@@ -60,7 +60,7 @@ msgid "Description"
 msgstr "Description"
 
 #: app/forms.py:37
-msgid "Event erstellen"
+msgid "Create Event"
 msgstr "Create Event"
 
 #: app/forms.py:42 app/forms.py:53
@@ -164,7 +164,7 @@ msgid "Create Blogpost"
 msgstr "Create Blogpost"
 
 #: app/templates/create_event.html:4
-msgid "Neues Event erstellen"
+msgid "Create New Event"
 msgstr "Create New Event"
 
 #: app/templates/edit_blog.html:4
@@ -242,7 +242,7 @@ msgid "UPCOMING EVENTS"
 msgstr "UPCOMING EVENTS"
 
 #: app/templates/index.html:50
-msgid "Suzume-Jong Schnupperabend"
+msgid "Suzume-Jong Taster Session"
 msgstr "Suzume-Jong Taster Session"
 
 #: app/templates/index.html:52
@@ -250,7 +250,7 @@ msgid "Club Event"
 msgstr "Club Event"
 
 #: app/templates/index.html:62
-msgid "Uhr"
+msgid "o'clock"
 msgstr "o'clock"
 
 #: app/templates/index.html:66
@@ -258,15 +258,15 @@ msgid "Discord (Online)"
 msgstr "Discord (Online)"
 
 #: app/templates/index.html:68
-msgid "TH Köln (Lokal)"
+msgid "TH Köln (On-site)"
 msgstr "TH Köln (On-site)"
 
 #: app/templates/index.html:80
-msgid "Interesse?"
+msgid "Interested?"
 msgstr "Interested?"
 
 #: app/templates/index.html:81
-msgid "Anmeldung per E-Mail an kontakt@kokushi-musou.de"
+msgid "Register via email at kontakt@kokushi-musou.de"
 msgstr "Register via email at kontakt@kokushi-musou.de"
 
 #: app/templates/user.html:3

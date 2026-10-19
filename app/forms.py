@@ -53,13 +53,13 @@ class EventForm(FlaskForm):
     event_type = SelectField(
         _l("Event Type"),
         choices=[
-            ("workshop", _l("Einsteigerworkshop")),
-            ("suzume", _l("Suzume Jong - Mahjong Schnupperabend")),
+            ("workshop", _l("Beginner Workshop")),
+            ("suzume", _l("Suzume Jong - Mahjong Taster Session")),
         ],
     )
     location_type = SelectField(
         _l("Location"),
-        choices=[("online", _l("Online")), ("lokal", _l("Lokal"))],
+        choices=[("online", _l("Online")), ("lokal", _l("On-site"))],
     )
     date = DateField(
         _l("Date"),
@@ -70,7 +70,7 @@ class EventForm(FlaskForm):
         _l("Time"), validators=[DataRequired(_l("This field is required."))]
     )
     description = TextAreaField(_l("Description"), validators=[Length(max=2000)])
-    submit = SubmitField(_l("Event erstellen"))
+    submit = SubmitField(_l("Create Event"))
 
 
 class LoginForm(FlaskForm):
